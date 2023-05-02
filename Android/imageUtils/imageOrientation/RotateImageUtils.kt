@@ -6,6 +6,17 @@ import android.media.ExifInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.util.Size
+
+
+fun getImageSize(image_path: String): Size {
+    // Set inJustDecodeBounds to true to decode only bounds of the image.
+    val bounds = BitmapFactory.Options().apply {
+        inJustDecodeBounds = true
+    }
+    BitmapFactory.decodeFile(image_path, bounds)
+    return Size(bounds.outWidth, bounds.outHeight)
+}
 
 
 fun getOrientationOfImageFromInputStream(inputStream: InputStream): Int {
