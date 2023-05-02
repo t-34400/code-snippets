@@ -1,0 +1,11 @@
+<manifest>
+    <!--
+      The higher 16 bits represent the major number and the lower 16 bits represent the minor number.
+      Ref: https://developer.android.com/guide/topics/manifest/uses-feature-element
+      
+      OpenGL ES 2.0 -> 0x00020000
+      OpenGL ES 3.0 -> 0x00030000
+      OpenGL ES 3.1 -> 0x00030001 (etc.)
+      -->
+    <uses-feature android:glEsVersion="0x00030000" android:required="true" />
+</manifest>
