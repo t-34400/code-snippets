@@ -53,4 +53,13 @@ class SampleTexture(
         GLUtils.texSubImage2D(GLES30.GL_TEXTURE_2D, level, xOffset, yOffset, newBitmap)
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, 0)
     }
+
+    fun bindTexture(textureIndex: Int = 0) {
+        GLES30.glActiveTexture(textureSlot)
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textureIds[textureIndex])
+    }
+
+    fun unbindTexture() {
+        GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, 0)
+    }
 }

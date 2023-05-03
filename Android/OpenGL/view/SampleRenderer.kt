@@ -1,12 +1,13 @@
 import javax.microedition.khronos.opengles.GL10
 
+import android.graphics.Bitmap
 import android.opengl.GLES30
 import android.opengl.GLSurfaceView.Renderer
 import android.opengl.Matrix
 
 import xxx.xxx.xxx.GLLog
 import xxx.xxx.xxx.TextureShader
-import xxx.xxx.xxx.Mesh
+import xxx.xxx.xxx.SampleMesh
 
 
 class SampleRenderer: GLSurfaceView.Renderer {
@@ -33,15 +34,19 @@ class SampleRenderer: GLSurfaceView.Renderer {
     private val cameraUpVector = Point3D(0.0f, 0.1f, 0.0f)
 
     private var _textureShader: TextureShader? = null
-    private var _mesh: Mesh? = null
+    private var _mesh: SampleMesh? = null
+    private var _texture: SampleTexture? = null
 
     private val textureShader: TextureShader get() = _textureShader!!
-    private val mesh: Mesh get() = _mesh!!
+    private val mesh: SampleMesh get() = _mesh!!
+    private val texture: SampleTexture get() = _texture!!
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
         GLES30.glClearColor(CLEAR_COLOR_R, CLEAR_COLOR_G, CLEAR_COLOR_B, CLEAR_COLOR_A)
         _textureShader = TextureShader()
         _mesh = Mesh()
+        bitmaps: List<Bitmap> = listOf( ... )
+        _texture = SampleTexture(bitmaps, GLES30.GL_TEXTURE0)
     }
 
     override fun onSurfaceChanged(unused: GL10, width: Int, height: Int) {
