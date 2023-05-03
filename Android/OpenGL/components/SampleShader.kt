@@ -57,7 +57,9 @@ object ShaderUtils {
     }
 }
 
-
+/**
+ * This class should be instantiated on the GL thread.
+ */
 class TextureShader {
     companion object {
         const val VERTEX_POSITION_ATTRIBUTE_NAME = "aPosition"
