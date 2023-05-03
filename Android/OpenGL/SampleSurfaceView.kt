@@ -13,6 +13,8 @@ class MyGLSurfaceView(context: Context) : GLSurfaceView(context) {
             setEGLContextClientVersion(3)
             renderer = SampleRenderer()
             setRenderer(renderer)
+        } else {
+            // show error message
         }
     }
 
