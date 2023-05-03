@@ -1,6 +1,8 @@
 import java.nio.IntBuffer
 import java.nio.FloatBuffer
 
+import xxx.xxx.xxx.GLLog
+
 /**
  * This class should be instantiated on the GL thread.
  */
@@ -62,14 +64,18 @@ class SampleMesh {
 
         val bufferObjectBuffer = InfBuffer.allocate(3)
         GLES30.glGenBuffers(3, bufferObjectBuffer)
+        GLLog.checkGLError("glGenBuffers")
         
         bufferObjects = (0..2).map { i ->
             val floatSize = 4
             val bufferSize = buffers[i].rewind().remaining()
             GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, bufferObjectBuffer[i])
+            GLLog.checkGLError("glBindBuffer")
             // use GLES30.GL_DYNAMIC_DRAW if you frequently update vertex data.
             GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, bufferSize*floatSize, buffers[i], GLES30.GL_STATIC_DRAW)
+            GLLog.checkGLError("glBufferData")
             GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, 0)
+            GLLog.checkGLError("glBindBuffer")
             return@map VertexBufferObject(SampleMesh.dimensions[i], bufferSize, bufferObjectBuffer[i])
         }
 
@@ -83,8 +89,11 @@ class SampleMesh {
             val offset = 0
             val floatSize = 4
             GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, bufferObject.bufferObject)
+            GLLog.checkGLError("glBindBuffer")
             GLES30.glBufferSubData(GLES30.GL_ARRAY_BUFFER, offset, bufferObject.bufferSize, newBufferList[i])
+            GLLog.checkGLError("glBufferSubData")
             GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, 0)
+            GLLog.checkGLError("glBindBuffer")
             return@map VertexBufferObject(bufferObjects[i].dimension, bufferObject.bufferSize, bufferObject.bufferObject)
         }
     }

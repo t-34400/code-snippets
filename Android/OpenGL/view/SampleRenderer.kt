@@ -6,6 +6,7 @@ import android.opengl.Matrix
 
 import xxx.xxx.xxx.GLLog
 import xxx.xxx.xxx.TextureShader
+import xxx.xxx.xxx.Mesh
 
 
 class SampleRenderer: GLSurfaceView.Renderer {
@@ -31,12 +32,16 @@ class SampleRenderer: GLSurfaceView.Renderer {
     private var cameraTarget = Point3D(0.0f, 0.0f, 0.0f)
     private val cameraUpVector = Point3D(0.0f, 0.1f, 0.0f)
 
-    private val textureShader: TextureShader? by lazy  { TextureShader() }
+    private var _textureShader: TextureShader? = null
+    private var _mesh: Mesh? = null
+
+    private val textureShader: TextureShader get() = _textureShader!!
+    private val mesh: Mesh get() = _mesh!!
 
     override fun onSurfaceCreated(unused: GL10, config: EGLConfig) {
         GLES30.glClearColor(CLEAR_COLOR_R, CLEAR_COLOR_G, CLEAR_COLOR_B, CLEAR_COLOR_A)
-        // Mesh: init
-        GLLog.checkGLError("initalize mesh")
+        _textureShader = TextureShader()
+        _mesh = Mesh()
     }
 
     override fun onSurfaceChanged(unused: GL10, width: Int, height: Int) {
