@@ -28,7 +28,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--video_path')
-    parser.add_argument('--output_dir_path', default=None)
+    parser.add_argument('--output_dir_path', default="./")
     parser.add_argument('--target_fps', type=int)
 
     args = parser.parse_args()
