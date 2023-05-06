@@ -5,16 +5,21 @@ This repository is a collection of code snippets that are frequently used or hav
 - **Android API**
     - Image Utils
         - Image Orientation:
-            *Code to get rotation information or size of an image, or get an InputStream of a rotated image on Android.*
+            - *Code to get rotation information or size of an image, or get an InputStream of a rotated image on Android.*
     - OpenGL
         - *Sample code to display a 3D model on an Android GLSurfaceView.*
 - **Blender API**
     - set_keyframe
-        *Sample code to set keyframe to mesh vertex coordinates.*
+        - *Sample code to set keyframe to mesh vertex coordinates.*
+    - install_module
+        - *Sample code to install a module to Blender Python.*
 - **Python**
     - Image Utils
         - gif_converter
-            *Methods to convert image files into the animation GIF.*
+            - *Methods to convert image files into the animation GIF.*
+    - scikit-learn
+        - nearest-neighbors
+            - *Sample code to perform a nearest neighbor search between a set of training coordinates and a set of test coordinates, and then calculates the mean of corresponding training floats to create test floats by using the Scikit-learn library .*
     - Video Utils
         - frame_extractor
             - *Methods to extract frames from images at specified frame rate.*

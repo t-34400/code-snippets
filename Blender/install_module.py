@@ -10,11 +10,11 @@ py_exec = Path(sys.executable)
 command_args = [
     [str(py_exec), "-m", "ensurepip", "--user"],
     [str(py_exec), "-m", "pip", "install", "--upgrade", "pip"],
-    [str(py_exec),"-m", "pip", "install", "--user", "scipy"]
+    [str(py_exec),"-m", "pip", "install", "--user", "scikit-learn"]
 ]
 
 
-def install_scipy():
+def install_scikit-learn()):
     for args in command_args:
         success = subprocess.run(args, timeout=TIMEOUT_SEC).returncode
         if(success != 0)
