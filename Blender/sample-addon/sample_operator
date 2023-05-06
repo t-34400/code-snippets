@@ -1,0 +1,16 @@
+import bpy
+
+
+class Sample_Operator(bpy.types.Operator):
+    bl_idname = "wm.sample_operator"
+    bl_label = "Sample Operator"
+
+    def execute(self, context):
+        props = context.scene.sample_panel_properties
+        chosen_item = props.sample_prop
+
+        self.report({"INFO"}, f'Info: Execution was successful. (Chosen item: {chosen_item})')
+        # self.report({"WARNING"}, 'Warning!')
+        # self.report({"ERROR"}, 'Error: Something went wrong.')
+
+        return {'FINISHED'} # {'CANCELLED'}
