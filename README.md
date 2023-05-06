@@ -9,6 +9,8 @@ This repository is a collection of code snippets that are frequently used or hav
     - OpenGL
         - *Sample code to display a 3D model on an Android GLSurfaceView.*
 - **Blender API**
+    - Sample Addon
+        - *Minimal Blender Add-on*
     - set_keyframe
         - *Sample code to set keyframe to mesh vertex coordinates.*
     - install_module
