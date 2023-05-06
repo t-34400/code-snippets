@@ -8,6 +8,11 @@ This repository is a collection of code snippets that are frequently used or hav
             - *Code to get rotation information or size of an image, or get an InputStream of a rotated image on Android.*
     - OpenGL
         - *Sample code to display a 3D model on an Android GLSurfaceView.*
+    - Storage Utils
+        - External Dir Provider
+            - *Code to get the external files directory*
+        - Get persistable URI permission
+            - *Methods to get persistable URI permission*
 - **Blender API**
     - Sample Addon
         - *Minimal Blender Add-on*
