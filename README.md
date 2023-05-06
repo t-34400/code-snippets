@@ -11,6 +11,8 @@ This repository is a collection of code snippets that are frequently used or hav
 - **Blender API**
     - Sample Addon
         - *Minimal Blender Add-on*
+    - Render image on 3D View
+        - *Image renderer on the 3D View of Blender UI*
     - set_keyframe
         - *Sample code to set keyframe to mesh vertex coordinates.*
     - install_module
