@@ -14,9 +14,9 @@ command_args = [
 ]
 
 
-def install_scikit-learn()):
+def install_scikit_learn():
     for args in command_args:
         success = subprocess.run(args, timeout=TIMEOUT_SEC).returncode
-        if(success != 0)
+        if(success != 0):
             return False
     return True
