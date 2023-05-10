@@ -6,6 +6,8 @@ This repository is a collection of code snippets that are frequently used or hav
     - Image Utils
         - Image Orientation:
             - *Code to get rotation information or size of an image, or get an InputStream of a rotated image on Android.*
+        - Image Binarizer
+            - *Code to binarize an input image.* 
     - OpenGL
         - *Sample code to display a 3D model on an Android GLSurfaceView.*
     - Storage Utils
