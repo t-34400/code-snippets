@@ -24,6 +24,8 @@ This repository is a collection of code snippets that are frequently used or hav
         - *Sample code to set keyframe to mesh vertex coordinates.*
     - install_module
         - *Sample code to install a module to Blender Python.*
+    - get_vertex_indices
+        - *Sample code to get the indices of the vertices in a vertex group*
 - **Python**
     - Image Utils
         - gif_converter
