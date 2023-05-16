@@ -36,7 +36,8 @@ This repository is a collection of code snippets that are frequently used or hav
     - Video Utils
         - frame_extractor
             - *Methods to extract frames from images at specified frame rate.*
-
+    - serial_port
+        - *Method to extract data from a serial port*
 
 # License
 This collection is licensed under the [MIT License](./LICENSE).
