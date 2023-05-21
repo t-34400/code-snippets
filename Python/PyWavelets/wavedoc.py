@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 
 
 t = np.linspace(0, 1, 1000)
-data = np.sin(50 * 2 * np.pi * t) * np.exp(-10 * t)
+data = np.random.normal(0, 1, len(t)) * np.sin(50 * 2 * np.pi * t) * np.exp(-10 * t)
 
 wavelet = 'db4'
-level = 5
+level = 6
 
 coeffs = pywt.wavedec(data, wavelet, level=level)
 
