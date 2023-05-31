@@ -29,7 +29,7 @@ public class WebCamDisplayController : MonoBehaviour
         AdjustRawImageSize();
     }
 
-    void OnDestroy()
+    void OnApplicationQuit()
     {
         webCamTexture.Stop();
     }
