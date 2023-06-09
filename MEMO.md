@@ -43,3 +43,11 @@
         - env\scripts\activate
     - cd [pytorch3dのパス]
     - py setup.py install
+
+# PyTorch
+- CrossEntropyLossを計算する前に，Softmaxをかけない．
+    - PyTorchのCrossEntropyLossは内部でSoftmaxをかけているので，学習の効率が悪化する．
+
+# Unity
+- Barracudaは，パッケージマネージャにはデフォルトで表示されない．
+    - 左上の＋ボタンから，Add package from git URLを選び，com.unity.barracudaと入力する．
