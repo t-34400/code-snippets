@@ -52,5 +52,7 @@
 - Nullableを有効にする．
     - Project settings > Player > Other settingsのAdditional Compiler Argumentsに以下を追加
         - -nullable:enable
+    - SerializeFieldは，null非許容なので初期値を与えないと警告が出る．
+        - GameObjeなどの場合は，default!を代入しておく？
 - Barracudaは，パッケージマネージャにはデフォルトで表示されない．
     - 左上の＋ボタンから，Add package from git URLを選び，com.unity.barracudaと入力する．
