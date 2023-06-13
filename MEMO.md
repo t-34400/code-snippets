@@ -49,5 +49,8 @@
     - PyTorchのCrossEntropyLossは内部でSoftmaxをかけているので，学習の効率が悪化する．
 
 # Unity
+- Nullableを有効にする．
+    - Project settings > Player > Other settingsのAdditional Compiler Argumentsに以下を追加
+        - -nullable:enable
 - Barracudaは，パッケージマネージャにはデフォルトで表示されない．
     - 左上の＋ボタンから，Add package from git URLを選び，com.unity.barracudaと入力する．
