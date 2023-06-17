@@ -56,3 +56,13 @@
         - GameObjectなどの場合は，default!を代入しておく？
 - Barracudaは，パッケージマネージャにはデフォルトで表示されない．
     - 左上の＋ボタンから，Add package from git URLを選び，com.unity.barracudaと入力する．
+ 
+# Amazon Fire Tablet
+- TTS(Text to speech)のエンジンをデフォルトエンジンから変更する．
+    - Google Play Storeをインストールして，Speech Service by Googleを導入しておく
+    - USB debuggingを有効にする．
+    - ADB shellから以下のコードを入力
+      ```
+      settings put secure tts_default_synth com.google.android.tts
+      ```
+    - 音声がインストールされていない場合は，Activity Launcherなどを使ってインストールする．
