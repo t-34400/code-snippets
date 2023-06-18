@@ -65,4 +65,8 @@
       ```
       settings put secure tts_default_synth com.google.android.tts
       ```
-    - 音声がインストールされていない場合は，Activity Launcherなどを使ってインストールする．
+    - スピードを変更する場合は，以下のコマンドを入力
+      ```
+      settings put secure tts_default_rate [rate(default=100)]
+      ```
+    - 音声がインストールされていない場合や音声を変更する場合は，Activity Launcherなどを使って，Speech Serviceの設定画面を開きインストールする．
