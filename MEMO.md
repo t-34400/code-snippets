@@ -65,11 +65,11 @@
             - XR Interaction Toolkit: v2.4.0
                 - 古いバージョンしか表示されない場合は，右上のボタンからAdd package by nameをクリックし，Nameに`com.unity.xr.interaction.toolkit`と入力し，バージョンを指定する．
             - XR Plugin Management: v4.2.1
-        - Package ManagerからXR Interaction ToolkitのStarter Assetsをインポートする．
+        - Package Managerを開き，XR Interaction ToolkitのSamplesタブからStarter Assets（デバイスなしでテストしたいならXR Device Simulatorも）をインポートする．
         - Project SettingsのXR Plug-in Managementタブのプロバイダを選択する．
     - シーン
-        - シーンにXR Interaction ManagerとXR OriginまたはXR Origin(Action Based)を追加
-            - Action Basedのほうは，Input Action Managerをデフォルトでコンポーネントとして持っている．
+        - XR Origin(XR)を追加
+            - 
  
 # Amazon Fire Tablet
 - TTS(Text to speech)のエンジンをデフォルトエンジンから変更する．
