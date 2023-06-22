@@ -59,6 +59,16 @@
     - VS Code上でCtrl+Shift+Pを押して，Develoer: Reload Windowを選択して実行する．
 - Barracudaは，パッケージマネージャにはデフォルトで表示されない．
     - 左上の＋ボタンから，Add package from git URLを選び，com.unity.barracudaと入力する．
+- XR
+    - インストール
+        - Package ManagerからXR Interaction ToolkitとXR Plugin Managementをインストールする．
+            - XR Interaction Toolkit: v2.0.4
+            - XR Plugin Management: v4.2.1
+        - Package ManagerからXR Interaction ToolkitのStarter Assetsをインポートする．
+        - Project SettingsのXR Plug-in Managementタブのプロバイダを選択する．
+    - シーン
+        - シーンにXR Interaction ManagerとXR OriginまたはXR Origin(Action Based)を追加
+            - Action Basedのほうは，Input Action Managerをデフォルトでコンポーネントとして持っている．
  
 # Amazon Fire Tablet
 - TTS(Text to speech)のエンジンをデフォルトエンジンから変更する．
