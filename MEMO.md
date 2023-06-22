@@ -62,7 +62,8 @@
 - XR
     - インストール
         - Package ManagerからXR Interaction ToolkitとXR Plugin Managementをインストールする．
-            - XR Interaction Toolkit: v2.0.4
+            - XR Interaction Toolkit: v2.4.0
+                - 古いバージョンしか表示されない場合は，右上のボタンからAdd package by nameをクリックし，Nameに`com.unity.xr.interaction.toolkit`と入力し，バージョンを指定する．
             - XR Plugin Management: v4.2.1
         - Package ManagerからXR Interaction ToolkitのStarter Assetsをインポートする．
         - Project SettingsのXR Plug-in Managementタブのプロバイダを選択する．
