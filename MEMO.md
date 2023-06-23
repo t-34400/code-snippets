@@ -50,7 +50,9 @@
 
 # Unity
 - Nullableを有効にする．
-    - Project settings > Player > Other settingsのAdditional Compiler Argumentsに以下を追加
+    - Project settings > Player > Other settingsのAdditional Compiler Argumentsに以下を追加する．
+        - -nullable:enable
+    - アセンブリ単位で有効化するには，asmdefファイルと同じディレクトリに.rspファイルを作成し，以下を記述する．
         - -nullable:enable
     - SerializeFieldは，null非許容なので初期値を与えないと警告が出る．
         - GameObjectなどの場合は，default!を代入しておく？
