@@ -1,0 +1,65 @@
+#pragma kernel DrawPoint
+#pragma kernel DrawLine
+#pragma kernel InitBackground
+
+RWTexture2D<float4> _Whiteboard;
+
+float2 _Position1;
+float2 _Position2;
+float _BrushSize;
+
+float DistanceToLineSegment(float2 targetPoint, float2 lineStart, float2 lineEnd);
+
+[numthreads(8,8,1)]
+void InitBackground(uint3 id : SV_DispatchThreadID)
+{
+    _Whiteboard[id.xy] = float4(1, 1, 1, 1);
+}
+
+[numthreads(8,8,1)]
+void DrawPoint(uint3 id : SV_DispatchThreadID)
+{
+    float2 pixelPos = float2(id.xy) + 0.5;
+
+    if(length(pixelPos - _Position1) < _BrushSize)
+    {
+        _Whiteboard[id.xy] = float4(0, 0, 0, 1);
+    }
+}
+
+[numthreads(8,8,1)]
+void DrawLine(uint3 id : SV_DispatchThreadID)
+{
+    float2 pixelPos = float2(id.xy) + 0.5;
+    float distance = DistanceToLineSegment(pixelPos, _Position1, _Position2);
+
+    if(distance < _BrushSize)
+    {
+        _Whiteboard[id.xy] = float4(0, 0, 0, 1);
+    }
+}
+
+float DistanceToLineSegment(float2 targetPoint, float2 lineStart, float2 lineEnd)
+{
+    float2 vectorFromStart = targetPoint - lineStart;
+    float2 lineVector = lineEnd - lineStart;
+    float2 direction = normalize(lineVector);
+    float2 projection = dot(vectorFromStart, direction) * direction;
+
+    float2 closestPoint;
+
+    if (dot(projection, lineVector) <= 0)
+    {
+        closestPoint = lineStart;
+    }
+    else if (dot(projection, lineVector) >= dot(lineVector, lineVector))
+    {
+        closestPoint = lineEnd;
+    }
+    else
+    {
+        closestPoint = lineStart + projection;
+    }
+
+    return length(targetPoint - closestPoint);
+}
