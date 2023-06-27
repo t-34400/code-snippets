@@ -17,7 +17,7 @@ public class BarracudaSample : MonoBehaviour
     [SerializeField] private NNModel modelAsset;
     private IWorker worker;
 
-    public BarracudaSample()
+    void Awake()
     {
         var model = ModelLoader.Load(modelAsset);
         // GPU
