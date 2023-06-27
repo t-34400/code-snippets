@@ -59,6 +59,7 @@
 - APIなどにVS CodeのIntelliSenseを効かせる．
     - Preference > External ToolsのGenerate.csprojの下のチェックボックスにチェックを入れる．
     - VS Code上でCtrl+Shift+Pを押して，Develoer: Reload Windowを選択して実行する．
+    - .NET Framework 4.7.1アセンブリへの参照エラーが発生する場合は，[Download .NET Framework 4.7.1](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net471)からDeveloper Packをインストールする．
 - Barracudaは，パッケージマネージャにはデフォルトで表示されない．
     - 左上の＋ボタンから，Add package from git URLを選び，com.unity.barracudaと入力する．
 - XR
