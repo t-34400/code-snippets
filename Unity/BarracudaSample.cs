@@ -29,7 +29,7 @@ public class BarracudaSample : MonoBehaviour
     public float[] Estimate(float[] input_a, float[] input_b)
     {
         var inputs = new Dictionary<string, Tensor>();
-        var input_tensor = new Tensor(BATCH_SIZE, NUM_CHANNELS, WIDTH, HEIGHT, InterleaveArray(input_a, input_b));
+        var input_tensor = new Tensor(BATCH_SIZE, WIDTH, HEIGHT, NUM_CHANNELS, InterleaveArray(input_a, input_b));
         inputs[INPUT_LABEL] = input_tensor;
 
         worker.Execute(inputs);
