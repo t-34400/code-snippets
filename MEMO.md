@@ -64,14 +64,31 @@
     - 左上の＋ボタンから，Add package from git URLを選び，com.unity.barracudaと入力する．
 - XR
     - インストール
-        - Package ManagerからXR Interaction ToolkitとXR Plugin Managementをインストールする．
+        - Package Managerから`XR Interaction Toolkit`と`XR Plugin Management`をインストールする．
             - XR Interaction Toolkit: v2.4.0
-                - 古いバージョンしか表示されない場合は，右上のボタンからAdd package by nameをクリックし，Nameに`com.unity.xr.interaction.toolkit`と入力し，バージョンを指定する．
             - XR Plugin Management: v4.2.1
-        - Package Managerを開き，XR Interaction ToolkitのSamplesタブからStarter Assets（デバイスなしでテストしたいならXR Device Simulatorも）をインポートする．
+        - Package Managerを開き，`XR Interaction Toolkit`のSamplesタブからStarter Assets（デバイスなしでテストしたいならXR Device Simulatorも）をインポートする．
         - Project SettingsのXR Plug-in Managementタブのプロバイダを選択する．
     - シーン
-        - XR Origin(XR)を追加
+        - 既存のカメラやイベントシステムを削除しておく．
+        - プレイヤーオブジェクトを作成
+            - Starter AssetsのPrefabsに入っている`Complete XR Origin Set Up`を使うのが手っ取り早い．
+            - シーン上に`Input Action Manager`と`InteractionManager`を追加する．
+            - プレイヤーオブジェクトに`XR Origin`をアタッチする．
+            - コントローラオブジェクトに`XR Controller`を追加する．
+            - コントローラで相互作用を起こす場合は，`XR ** Interactor`を追加する．
+        - Interactorイベントを発生させるInteractorを任意のオブジェクトに追加する．
+            - AR Gesture Interactor
+            - XR Direct Interactor
+            - XR Poke Interactor
+            - XR Ray Interactor
+            - XR Socket Interactor
+        - イベントを受信するInteractableを任意のオブジェクトに追加する．
+            - XR Grab Interactable
+            - XR Simple Interactable
+        - デバイスから入力を受けるUIのキャンバスに，`Tracked Device Graphic Raycaster`を追加する．
+        - Reference: [Components | XR Interaction Toolkit | 2.3.0-pre.1 ](https://docs.unity.cn/Packages/com.unity.xr.interaction.toolkit@2.3/manual/components.html)
+
 - [Oculus Lipsync SDK](https://developer.oculus.com/downloads/package/oculus-lipsync-unity)
     - SDKをダウンロードして展開する．
     - メニューバーの`Assets` > `Import package` > `Custom package`を選択して，展開したファイルに含まれている.unitypackageファイルを開き，インポートする．
