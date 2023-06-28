@@ -72,7 +72,11 @@
         - Project SettingsのXR Plug-in Managementタブのプロバイダを選択する．
     - シーン
         - XR Origin(XR)を追加
-            - 
+- [Oculus Lipsync SDK](https://developer.oculus.com/downloads/package/oculus-lipsync-unity)
+    - SDKをダウンロードして展開する．
+    - メニューバーの`Assets` > `Import package` > `Custom package`を選択して，展開したファイルに含まれている.unitypackageファイルを開き，インポートする．
+    - 適当なゲームオブジェクトに`OVR Lip Sync Context`と`OVR Lip Sync context Morph Target`をアタッチする．
+    - `OVR Lip Sync Context`の`Audio Source`，`OVR Lip Sync context Morph Target`の`Skinned Mesh Renderer`に適当なオブジェクト/コンポーネントをアタッチする．
  
 # Amazon Fire Tablet
 - TTS(Text to speech)のエンジンをデフォルトエンジンから変更する．
