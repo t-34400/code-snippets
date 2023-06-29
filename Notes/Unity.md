@@ -18,12 +18,14 @@
     - 左上の＋ボタンから，Add package from git URLを選び，com.unity.barracudaと入力する．
 
 ## XR
+
 ### インストール
 - Package Managerから`XR Interaction Toolkit`と`XR Plugin Management`をインストールする．
     - XR Interaction Toolkit: v2.4.0
     - XR Plugin Management: v4.2.1
 - Package Managerを開き，`XR Interaction Toolkit`のSamplesタブからStarter Assets（デバイスなしでテストしたいならXR Device Simulatorも）をインポートする．
 - Project SettingsのXR Plug-in Managementタブのプロバイダを選択する．
+
 ### シーン
 - 既存のカメラやイベントシステムを削除しておく．
 - プレイヤーオブジェクトを作成
@@ -43,6 +45,16 @@
     - XR Simple Interactable
 - デバイスから入力を受けるUIのキャンバスに，`Tracked Device Graphic Raycaster`を追加する．
 - Reference: [Components | XR Interaction Toolkit | 2.3.0-pre.1 ](https://docs.unity.cn/Packages/com.unity.xr.interaction.toolkit@2.3/manual/components.html)
+
+### XR Hands
+
+### Quest Pro
+- [Meta Quest Developer Hub](https://developer.oculus.com/documentation/unity/ts-odh/)をインストールする．
+    - デバイスを接続し，Developer modeを有効化する．
+- ビルド設定は[公式の解説](https://developer.oculus.com/documentation/unity/unity-conf-settings/)を参照．
+    - Unity 2022.3.2f1では，以下の部分が記述時の説明と異なった．
+        - `Low Overhead Mode`が，Project Settingsの`XR Plug-in Management` > `Oculus`に移動している．
+        - `Texture Quality`が，`Quality` > `Textures` > `Global Mipmap Limit`に変更されている．
 
 # [Oculus Lipsync SDK](https://developer.oculus.com/downloads/package/oculus-lipsync-unity)
 - SDKをダウンロードして展開する．
