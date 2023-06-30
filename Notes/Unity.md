@@ -55,6 +55,10 @@
     - Unity 2022.3.2f1では，以下の部分が記述時の説明と異なった．
         - `Low Overhead Mode`が，Project Settingsの`XR Plug-in Management` > `Oculus`に移動している．
         - `Texture Quality`が，`Quality` > `Textures` > `Global Mipmap Limit`に変更されている．
+- Compute Shaderを使う場合は以下の点に注意する．
+    - float型のサイズに注意する．
+        - `RenderTexture`を使う場合は，フォーマットを`RenderTextureFormat.ARGBFloat`にする．
+    - Compute Shaderは，OpenGL ES 3.1以降しか対応していないため，Player SettingsのRequire ES3.1にチェックを入れる．
 
 # [Oculus Lipsync SDK](https://developer.oculus.com/downloads/package/oculus-lipsync-unity)
 - SDKをダウンロードして展開する．
