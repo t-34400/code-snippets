@@ -26,6 +26,9 @@
 - Package Managerを開き，`XR Interaction Toolkit`のSamplesタブからStarter Assets（デバイスなしでテストしたいならXR Device Simulatorも）をインポートする．
 - Project SettingsのXR Plug-in Managementタブのプロバイダを選択する．
 
+### 設定
+- Project settingsのQualityタブから，Shadow distanceを小さくしておく．
+
 ### シーン
 - 既存のカメラやイベントシステムを削除しておく．
 - プレイヤーオブジェクトを作成
