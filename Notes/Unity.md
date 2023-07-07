@@ -73,3 +73,8 @@
 - [Unity Asset Store](https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022)からOculus Integrationをダウンロードし，プロジェクトにインポートする．
 - [Configure Unity Settings](https://developer.oculus.com/documentation/unity/unity-conf-settings/)に従って設定を行う．
 - 
+
+# Face tracking
+- Package Managerの`Add package from git URL`を選択し，以下のURLを追加する．
+    - https://github.com/oculus-samples/Unity-Movement.git
+- 
