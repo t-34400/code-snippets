@@ -84,7 +84,20 @@
             - `Two Grab Plane Transformer`: 両手でグラブした際に，平面上でオブジェクトを移動，回転，スケールできる．
             - `Two Grab Free Transformer`: 両手でグラブした際に，オブジェクトを移動，回転，スケールできる．
             - いずれもパラメータは制約できる．
-    - (Hand) Grab Interactableは，グラブするポイントに設定する．
+            - `One Grab Transformer`を`None`にすると，両手でグラブするまで動かなくなる．
+            - `Two Grab Transformer`に`One Grab *** Transformer`を設定することもできる（この場合，両手でグラブした際に，最初にグラブした片手で`One Grab *** Transformer`の挙動をする）．
+    - `(Hand) Grab Interactable`は，グラブするポイントに設定する．
+        - Grab Poseを設定したい場合，`Hand Grab Interactable`は，[Create a Hand Grab Pose (PC)](https://developer.oculus.com/documentation/unity/unity-isdk-creating-handgrab-poses/)に従って設定するのが楽．
+            - HMDとQuest Linkで接続する． 
+            - メニューバーから`Oculus` > `Interaction` > `Hand Grab Pose Recorder`を選択する．
+            - `Hand used for recording poses`に`Left Hand`(Controllers as handsを使う場合は，`Left Controller hand`)を設定する．
+            - `GameObject to record the hand grab poses for`にGrab Poseを設定したいオブジェクトを設定する．
+            - プレイモードに入り，**Unity Editorのゲーム画面をクリックしてから**，設定したいPoseに手の形を変えた上でスペースキーを押す（`Hand Grab Pose Recorder`ウィンドウでは，ウィンドウにフォーカスするように書いてあるが，上手くいかなかった）．
+                - 一度にいくつでもレコード可能． 
+            - プレイモードを抜ける前に，Save To Collectionを押す．
+            - プレイモードを抜けて，Load From Collectionを押す．
+            - これにより，`HandGrabInteractable`が自動で追加される．
+            - 逆の手を追加したい場合は，`HandGrabInteractable`の`Hand Grab Interactable`の`Create Mirrored HandGrabInteractable`をクリックするか，同じ手順で逆の手も設定する．
 
 # Face tracking
 - Package Managerの`Add package from git URL`を選択し，以下のURLを追加する．
