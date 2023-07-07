@@ -72,7 +72,19 @@
 # Oculus Integration
 - [Unity Asset Store](https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022)からOculus Integrationをダウンロードし，プロジェクトにインポートする．
 - [Configure Unity Settings](https://developer.oculus.com/documentation/unity/unity-conf-settings/)に従って設定を行う．
-- 
+- [Getting Started with Interaction SDK](https://developer.oculus.com/documentation/unity/unity-isdk-getting-started/)に従ってカメラリグ等を設置する．
+    - スティックで視点を動かしたい場合は，`OVRPlayerController` Prefabを利用する．
+- [Create Grab Interactions](https://developer.oculus.com/documentation/unity/unity-isdk-create-hand-grab-interactions/)に従ってGrab interactionを設定する．
+    - Grabbableは，グラブできるオブジェクトに設定する．
+        - `One Grab Transformer`, `Two Grab Transformer`オプションで，片手グラブ，両手グラブした際の挙動を設定できる．
+            - `One Grab Translate Transformer`: 片手でグラブした際に，Positionの移動ができる．
+            - `One Grab Rotate Transformer`:　片手でグラブした際に，オブジェクトを回転できる．
+            - `One Grab Free Transformer`: 片手でグラブした際に，オブジェクトを移動，回転，スケールできる．
+            - `Two Grab Rotate Transformer`: 両手でグラブした際に，オブジェクトを回転できる．
+            - `Two Grab Plane Transformer`: 両手でグラブした際に，平面上でオブジェクトを移動，回転，スケールできる．
+            - `Two Grab Free Transformer`: 両手でグラブした際に，オブジェクトを移動，回転，スケールできる．
+            - いずれもパラメータは制約できる．
+    - (Hand) Grab Interactableは，グラブするポイントに設定する．
 
 # Face tracking
 - Package Managerの`Add package from git URL`を選択し，以下のURLを追加する．
