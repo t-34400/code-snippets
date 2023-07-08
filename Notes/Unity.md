@@ -1,5 +1,11 @@
 # Unity
 
+## 一般
+- 一定の条件下でコンポーネントのイベント関数を有効化するには，enabledを変更するのがよい．
+  ```cshirp
+  gameObject.GetComponent<Hoge>().enabled = false;
+  ```
+
 ## Nullable
 - Project settings > Player > Other settingsのAdditional Compiler Argumentsに以下を追加する．
     - -nullable:enable
