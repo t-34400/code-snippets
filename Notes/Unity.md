@@ -76,16 +76,17 @@
     - スティックで視点を動かしたい場合は，`OVRPlayerController` Prefabを利用する．
 - [Create Grab Interactions](https://developer.oculus.com/documentation/unity/unity-isdk-create-hand-grab-interactions/)に従ってGrab interactionを設定する．
     - Grabbableは，グラブできるオブジェクトに設定する．
+        - 非Kinematicなオブジェクトの場合は[`PhysicsGrabbable`](https://developer.oculus.com/documentation/unity/unity-isdk-using-with-physics/#physicsgrabbable)を使う
         - `One Grab Transformer`, `Two Grab Transformer`オプションで，片手グラブ，両手グラブした際の挙動を設定できる．
-            - `One Grab Translate Transformer`: 片手でグラブした際に，Positionの移動ができる．
-            - `One Grab Rotate Transformer`:　片手でグラブした際に，オブジェクトを回転できる．
-            - `One Grab Free Transformer`: 片手でグラブした際に，オブジェクトを移動，回転，スケールできる．
-            - `Two Grab Rotate Transformer`: 両手でグラブした際に，オブジェクトを回転できる．
-            - `Two Grab Plane Transformer`: 両手でグラブした際に，平面上でオブジェクトを移動，回転，スケールできる．
-            - `Two Grab Free Transformer`: 両手でグラブした際に，オブジェクトを移動，回転，スケールできる．
-            - いずれもパラメータは制約できる．
-            - `One Grab Transformer`を`None`にすると，両手でグラブするまで動かなくなる．
-            - `Two Grab Transformer`に`One Grab *** Transformer`を設定することもできる（この場合，両手でグラブした際に，最初にグラブした片手で`One Grab *** Transformer`の挙動をする）．
+        - `One Grab Translate Transformer`: 片手でグラブした際に，Positionの移動ができる．
+        - `One Grab Rotate Transformer`:　片手でグラブした際に，オブジェクトを回転できる．
+        - `One Grab Free Transformer`: 片手でグラブした際に，オブジェクトを移動，回転，スケールできる．
+        - `Two Grab Rotate Transformer`: 両手でグラブした際に，オブジェクトを回転できる．
+        - `Two Grab Plane Transformer`: 両手でグラブした際に，平面上でオブジェクトを移動，回転，スケールできる．
+        - `Two Grab Free Transformer`: 両手でグラブした際に，オブジェクトを移動，回転，スケールできる．
+        - いずれもパラメータは制約できる．
+        - `One Grab Transformer`を`None`にすると，両手でグラブするまで動かなくなる．
+        - `Two Grab Transformer`に`One Grab *** Transformer`を設定することもできる（この場合，両手でグラブした際に，最初にグラブした片手で`One Grab *** Transformer`の挙動をする）．
     - `(Hand) Grab Interactable`は，グラブするポイントに設定する．
         - Grab Poseを設定したい場合，`Hand Grab Interactable`は，[Create a Hand Grab Pose (PC)](https://developer.oculus.com/documentation/unity/unity-isdk-creating-handgrab-poses/)に従って設定するのが楽．
             - HMDとQuest Linkで接続する． 
