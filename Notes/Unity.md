@@ -13,6 +13,17 @@
     - -nullable:enable
 - SerializeFieldは，null非許容なので初期値を与えないと警告が出る．
     - GameObjectなどの場合は，default!を代入しておく？
+ 
+## Tests
+- テスト用のasmdefは，以下のように設定する．
+  - `Override References`にチェックを入れる
+  - `Assembly　Definition　References`に`UnityEditor.TestRunner`と`UnityEngine.TestRunner`を指定する．
+  - `Assembly References`に`nunit.framework.dll`を指定する．
+- Internalなクラスをチェックするには，公開する側のasmdefと同じディレクトリに以下を記述したcsファイルを配置する．
+  ```cshirp
+  using System.Runtime.CompilerServices;
+  [assembly: InternalsVisibleTo("[アセンブリ名]")]
+  ```
 
 ## VS CodeのIntelliSense．
 - Preference > External ToolsのGenerate.csprojの下のチェックボックスにチェックを入れる．
