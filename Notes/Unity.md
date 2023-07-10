@@ -19,10 +19,10 @@
   - `Override References`にチェックを入れる
   - `Assembly　Definition　References`に`UnityEditor.TestRunner`と`UnityEngine.TestRunner`を指定する．
   - `Assembly References`に`nunit.framework.dll`を指定する．
-- Internalなクラスをチェックするには，公開する側のasmdefと同じディレクトリに以下を記述したcsファイルを配置する．
+- Internalなクラスをチェックするには，公開元のasmdefと同じディレクトリに以下を記述したcsファイルを配置する．
   ```cshirp
   using System.Runtime.CompilerServices;
-  [assembly: InternalsVisibleTo("[アセンブリ名]")]
+  [assembly: InternalsVisibleTo("[公開先のアセンブリ名]")]
   ```
 
 ## VS CodeのIntelliSense．
