@@ -116,6 +116,24 @@
             - プレイモードを抜けて，Load From Collectionを押す．
             - これにより，`HandGrabInteractable`が自動で追加される．
             - 逆の手を追加したい場合は，`HandGrabInteractable`の`Hand Grab Interactable`の`Create Mirrored HandGrabInteractable`をクリックするか，同じ手順で逆の手も設定する．
+         
+# Haptic feedback
+- 呼び出したいスクリプトのアセンブリに，Oculus.VRへの参照を追加する．
+- 以下のメソッドでhapticを発生させる（半永続的に発生する）．
+  ```cshirp
+  OVRInput.SetControllerVibration(float frequency, float amplitude, OVRInput.Controller controllerMask);
+  ```
+- 一定時間経過で止めたい場合は，コルーチンなどを利用する．
+  ```cshirp
+  public static IEnumerator TriggerHapticFeedback(float duration, float frequency, float amplitude, OVRInput.Controller controller)
+  {
+    OVRInput.SetControllerVibration(frequency, amplitude, controller);
+
+    yield return new WaitForSeconds(duration);
+
+    OVRInput.SetControllerVibration(0, 0, controller);
+  }
+  ```
 
 # Face tracking
 - Package Managerの`Add package from git URL`を選択し，以下のURLを追加する．
