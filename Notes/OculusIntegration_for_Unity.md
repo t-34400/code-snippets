@@ -6,7 +6,9 @@
     - スティックで視点を動かしたい場合は，`OVRPlayerController` Prefabを利用する．
 - Touchコントローラの入力の取得方法(以下は右コントローラのAボタン)．
   ```cshirp
-  OVRInput.Get(OVRInput.Button.One, OVRInput.Controller.RTouch);
+  OVRInput.Get(OVRInput.Button.One, OVRInput.Controller.RTouch); // 押されている間はtrue
+  OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch); // 押したフレームでtrue
+  OVRInput.GetUp(OVRInput.Button.One, OVRInput.Controller.RTouch); // 離したフレームでtrue
   ```
 
 ## Interaction SDK
