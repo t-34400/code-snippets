@@ -37,6 +37,7 @@ class VibrationWrapper : MonoBehaviour
 
         if(!isLeftHandCoroutineRunning)
         {
+            isLeftHandCoroutineRunning = true;
             StartCoroutine(Vibrate(OVRInput.Controller.LHand));
         }
     }
@@ -47,6 +48,7 @@ class VibrationWrapper : MonoBehaviour
 
         if(!isRightHandCoroutineRunning)
         {
+            isRightHandCoroutineRunning = true;
             StartCoroutine(Vibrate(OVRInput.Controller.RHand));
         }
     }
