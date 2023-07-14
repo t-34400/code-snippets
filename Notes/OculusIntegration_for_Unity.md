@@ -4,7 +4,7 @@
   - [Configure Unity Settings](https://developer.oculus.com/documentation/unity/unity-conf-settings/)に従って設定を行う．
   - [Getting Started with Interaction SDK](https://developer.oculus.com/documentation/unity/unity-isdk-getting-started/)に従ってカメラリグ等を設置する．
     - スティックで視点を動かしたい場合は，`OVRPlayerController` Prefabを利用する．
-- コントローラの入力の取得方法
+- Touchコントローラの入力の取得方法(以下はAボタン)．
   ```cshirp
   OVRInput.Get(OVRInput.Button.One, OVRInput.Controller.RTouch);
   ```
@@ -35,6 +35,7 @@
             - プレイモードを抜けて，Load From Collectionを押す．
             - これにより，`HandGrabInteractable`が自動で追加される．
             - 逆の手を追加したい場合は，`HandGrabInteractable`の`Hand Grab Interactable`の`Create Mirrored HandGrabInteractable`をクリックするか，同じ手順で逆の手も設定する．
+    - Hover/Selectイベントを取得する場合は，`InteractableUnityEventWrapper`コンポーネントを使うと楽． 
          
 ## Haptic feedback
 - 呼び出したいスクリプトのアセンブリに，Oculus.VRへの参照を追加する．
@@ -53,6 +54,7 @@
     OVRInput.SetControllerVibration(0, 0, controller);
   }
   ```
+- 明示的に止めなかった場合は，２秒後に自動で止まる．
 
 ## Face tracking
 - Package Managerの`Add package from git URL`を選択し，以下のURLを追加する．
