@@ -88,6 +88,7 @@ class VibrationWrapper : MonoBehaviour
         }
 
         OVRInput.SetControllerVibration(0.0f, 0.0f, controller);
+        SetCoroutineRunningStateFalse(controller);
     }
 
     private List<VibrationSettings>? GetVibrationSettingsList(OVRInput.Controller controller)
@@ -114,5 +115,22 @@ class VibrationWrapper : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         GetVibrationSettingsList(controller)?.Remove(vibrationSettings);
+    }
+
+    private void SetCoroutineRunningStateFalse(OVRInput.Controller controller)
+    {
+        switch(controller)
+        {
+            case OVRInput.Controller.LTouch:
+                {
+                    isLeftHandCoroutineRunning = false;
+                    return;
+                }
+            case OVRInput.Controller.RTouch:
+                {
+                    isRightHandCoroutineRunning = false;
+                    return;
+                }
+        }
     }
 }
