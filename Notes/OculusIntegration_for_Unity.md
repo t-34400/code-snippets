@@ -4,7 +4,7 @@
   - [Configure Unity Settings](https://developer.oculus.com/documentation/unity/unity-conf-settings/)に従って設定を行う．
   - [Getting Started with Interaction SDK](https://developer.oculus.com/documentation/unity/unity-isdk-getting-started/)に従ってカメラリグ等を設置する．
     - スティックで視点を動かしたい場合は，`OVRPlayerController` Prefabを利用する．
-- Touchコントローラの入力の取得方法(以下はAボタン)．
+- Touchコントローラの入力の取得方法(以下は右コントローラのAボタン)．
   ```cshirp
   OVRInput.Get(OVRInput.Button.One, OVRInput.Controller.RTouch);
   ```
@@ -55,6 +55,7 @@
   }
   ```
 - 明示的に止めなかった場合は，２秒後に自動で止まる．
+- [サンプルクラス](../Unity/Oculus/VibrationWrapper.cs)
 
 ## Face tracking
 - Package Managerの`Add package from git URL`を選択し，以下のURLを追加する．
