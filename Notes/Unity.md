@@ -2,7 +2,7 @@
 
 ## 一般
 - 一定の条件下でコンポーネントのイベント関数を有効化するには，enabledを変更するのがよい．
-  ```cshirp
+  ```c#
   gameObject.GetComponent<Hoge>().enabled = false;
   ```
 
@@ -20,10 +20,45 @@
   - `Assembly　Definition　References`に`UnityEditor.TestRunner`と`UnityEngine.TestRunner`を指定する．
   - `Assembly References`に`nunit.framework.dll`を指定する．
 - Internalなクラスをチェックするには，公開元のasmdefと同じディレクトリに以下を記述したcsファイルを配置する．
-  ```cshirp
+  ```c#
   using System.Runtime.CompilerServices;
   [assembly: InternalsVisibleTo("[公開先のアセンブリ名]")]
   ```
+- テストの記法
+  <details>
+  <summary>Attributes</summary>
+    
+  - [Test] テストメソッド
+  - [Values] 複数の引数についてテスト
+      ```c#
+      [Test]
+      public void ValuesTest([Values(1, 2, 3)] int value)
+      {
+        // ...
+      }
+
+      [Test]
+      public void EnumTest([Values] FooEnum value)
+      {
+        // ...
+      }
+
+      [Test]
+      public void BoolTest([Values] bool value)
+      {
+        // ...
+      }
+      ```
+  - [TestCase] 入力と出力を指定してテスト
+      ```c#
+      [TestCase(1, 1, ExpectedResult = 2, Description = "Addition with positive numbers")]
+      [TestCase(-1, -1, ExpectedResult = -1, Description = "Addition with negative numbers")]
+      public int AddTest(int number1, int number2)
+      {
+        return number1 + number2;
+      }
+      ```
+  </details>
 
 ## VS CodeのIntelliSense．
 - Preference > External ToolsのGenerate.csprojの下のチェックボックスにチェックを入れる．
@@ -32,7 +67,7 @@
 
 ## ScriptableObject
 - 次のようなスクリプトを作成する．
-  ```cshirp
+  ```c#
   using UnityEngine;
 
   [CreateAssetMenu]
