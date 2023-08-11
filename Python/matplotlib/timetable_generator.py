@@ -34,7 +34,7 @@ for i, data in enumerate(data_list):
         verts.append(v)
         colors.append(label_colors[i])
 
-bars = PolyCollection(verts, facecolors=colors)
+bars = PolyCollection(verts, facecolors=colors, edgecolors='black')
 
 fig, ax = plt.subplots()
 ax.add_collection(bars)
