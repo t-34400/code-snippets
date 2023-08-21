@@ -85,6 +85,7 @@ class VibrationWrapper : MonoBehaviour
             }
 
             previousInputTime = currentTime;
+            previousVibrationSettings = currentVibrationSettings;
             OVRInput.SetControllerVibration(currentVibrationSettings.frequency, currentVibrationSettings.amplitude, controller);
             yield return null;
         }
