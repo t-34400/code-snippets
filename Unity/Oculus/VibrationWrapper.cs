@@ -23,9 +23,9 @@ namespace OculusHelpers
         private bool isLeftHandCoroutineRunning = false;
         private bool isRightHandCoroutineRunning = false;
 
-        public Guid StartLeftHandVibration(VibrationSettings vibrationSettings, float? duration = null)
+        public Guid StartLeftHandVibration(VibrationSettings vibrationSettings)
         {
-            var vibrationId = new Guid();
+            var vibrationId = Guid.NewGuid();
             leftHandVibrationSettingsList.Add((vibrationId, vibrationSettings));
 
             if(!isLeftHandCoroutineRunning)
@@ -34,17 +34,12 @@ namespace OculusHelpers
                 StartCoroutine(Vibrate(OVRInput.Controller.LTouch));
             }
 
-            if(duration != null && duration > 0.0f)
-            {
-                StartCoroutine(StopVibrationAfterDelay(OVRInput.Controller.LTouch, vibrationId, duration!.Value));
-            }
-
             return vibrationId;
         }
 
-        public Guid StartRightHandVibration(VibrationSettings vibrationSettings, float? duration = null)
+        public Guid StartRightHandVibration(VibrationSettings vibrationSettings)
         {
-            var vibrationId = new Guid();
+            var vibrationId = Guid.NewGuid();
             rightHandVibrationSettingsList.Add((vibrationId, vibrationSettings));
 
             if(!isRightHandCoroutineRunning)
@@ -53,17 +48,20 @@ namespace OculusHelpers
                 StartCoroutine(Vibrate(OVRInput.Controller.RTouch));
             }
 
-            if(duration != null && duration > 0.0f)
-            {
-                StartCoroutine(StopVibrationAfterDelay(OVRInput.Controller.RTouch, vibrationId, duration!.Value));
-            }
-
             return vibrationId;
         }
 
         public void StopLeftHandVibration(Guid vibrationId)
         {
+            Debug.Log($"Before stop left: {leftHandVibrationSettingsList.Count}");
+            var message = "Before stop left ids:\n";
+            foreach(var setting in leftHandVibrationSettingsList)
+            {
+                message += $"{setting.vibrationId}\n";
+            }
+            Debug.Log(message);
             leftHandVibrationSettingsList.RemoveAll(pair => pair.vibrationId == vibrationId);
+            Debug.Log($"After stop left: {leftHandVibrationSettingsList.Count}");
         }
 
         public void StopRightHandVibration(Guid vibrationId)
@@ -100,13 +98,6 @@ namespace OculusHelpers
 
             OVRInput.SetControllerVibration(0.0f, 0.0f, controller);
             SetCoroutineRunningStateFalse(controller);
-        }
-
-        private IEnumerator StopVibrationAfterDelay(OVRInput.Controller controller, Guid vibrationId, float delay)
-        {
-            yield return new WaitForSeconds(delay);
-
-            GetVibrationSettingsList(controller)?.RemoveAll(pair => pair.vibrationId == vibrationId);;
         }
 
         private List<(Guid vibrationId, VibrationSettings settings)>? GetVibrationSettingsList(OVRInput.Controller controller)
