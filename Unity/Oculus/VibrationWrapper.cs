@@ -53,15 +53,7 @@ namespace OculusHelpers
 
         public void StopLeftHandVibration(Guid vibrationId)
         {
-            Debug.Log($"Before stop left: {leftHandVibrationSettingsList.Count}");
-            var message = "Before stop left ids:\n";
-            foreach(var setting in leftHandVibrationSettingsList)
-            {
-                message += $"{setting.vibrationId}\n";
-            }
-            Debug.Log(message);
             leftHandVibrationSettingsList.RemoveAll(pair => pair.vibrationId == vibrationId);
-            Debug.Log($"After stop left: {leftHandVibrationSettingsList.Count}");
         }
 
         public void StopRightHandVibration(Guid vibrationId)
