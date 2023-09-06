@@ -5,7 +5,7 @@
   - [Getting Started with Interaction SDK](https://developer.oculus.com/documentation/unity/unity-isdk-getting-started/)に従ってカメラリグ等を設置する．
     - スティックで視点を動かしたい場合は，`OVRPlayerController` Prefabを利用する．
 - Touchコントローラの入力の取得方法(以下は右コントローラのAボタン)．
-  ```cshirp
+  ```c#
   OVRInput.Get(OVRInput.Button.One, OVRInput.Controller.RTouch); // 押されている間はtrue
   OVRInput.GetDown(OVRInput.Button.One, OVRInput.Controller.RTouch); // 押したフレームでtrue
   OVRInput.GetUp(OVRInput.Button.One, OVRInput.Controller.RTouch); // 離したフレームでtrue
@@ -42,11 +42,11 @@
 ## Haptic feedback
 - 呼び出したいスクリプトのアセンブリに，Oculus.VRへの参照を追加する．
 - 以下のメソッドでhapticを発生させる（半永続的に発生する）．
-  ```cshirp
+  ```c#
   OVRInput.SetControllerVibration(float frequency, float amplitude, OVRInput.Controller controllerMask);
   ```
 - 一定時間経過で止めたい場合は，コルーチンなどを利用する．
-  ```cshirp
+  ```c#
   public static IEnumerator TriggerHapticFeedback(float duration, float frequency, float amplitude, OVRInput.Controller controller)
   {
     OVRInput.SetControllerVibration(frequency, amplitude, controller);
@@ -62,5 +62,63 @@
 ## Face tracking
 - Package Managerの`Add package from git URL`を選択し，以下のURLを追加する．
     - https://github.com/oculus-samples/Unity-Movement.git
+
 ## Movement SDK
 - Oculus Linkを使いEditor上でトラッキングデータを使うには，Oculusアプリの`設定` > `ベータ`の`開発者ランタイムモード`をオンにする．
+- BodyStateのPoseは，カメラリグのTracking Spaceからの相対位置で，Right-handed system?
+    ```c#
+    private void Update()
+    {
+        if(bodyTrackingDataManager.TryGetBodyTrackingData(out var bodyTrackingData))
+        {
+            var trackingSpacePosition = trackingSpace.transform.position;
+            var trackingSpaceRotation = trackingSpace.transform.rotation;
+
+            foreach(var (anchorObject, index) in anchorObjects.Select((anchorObject, index) => (anchorObject, index)))
+            {
+                var location = bodyTrackingData.locations.ElementAtOrDefault(index);
+                anchorObject.transform.position = playerPosition + playerRotation * (location.position + location.orientation * cubeOffset);
+                anchorObject.transform.rotation = playerRotation * location.orientation;
+            }
+        }
+    }
+
+    private bool TryGetBodyTrackingData(out BodyTrackingData bodyTrackingData)
+    {
+        var _bodyState = ovrBody?.BodyState;
+
+        if(_bodyState == null)
+        {
+            bodyTrackingData = default!;
+            return false;
+        }
+
+        var bodyState = _bodyState!.Value;
+
+        var time = bodyState.Time;
+        var confidence = bodyState.Confidence;
+
+        var locations = bodyState.JointLocations.Select(location => 
+            {
+                var pose = location.Pose;
+                return (ConvertVector3f(pose.Position), ConvertQuatf(pose.Orientation));
+            })
+            .ToList();
+
+        bodyTrackingData = new(time, confidence, locations);
+        return true;
+    }
+
+    private record BodyTrackingData(double time, float confidence, List<(Vector3 position, Quaternion orientation)> locations);
+    
+    private Vector3 ConvertVector3f(OVRPlugin.Vector3f vector)
+    {
+        return new Vector3(vector.x, vector.y, -vector.z);
+    }
+
+    private Quaternion ConvertQuatf(OVRPlugin.Quatf quat)
+    {
+        return new Quaternion(quat.x, quat.y, -quat.z, -quat.w);
+    }    
+    ```
+    
