@@ -62,4 +62,5 @@
 ## Face tracking
 - Package Managerの`Add package from git URL`を選択し，以下のURLを追加する．
     - https://github.com/oculus-samples/Unity-Movement.git
-- 
+## Movement SDK
+- Oculus Linkを使いEditor上でトラッキングデータを使うには，Oculusアプリの`設定` > `ベータ`の`開発者ランタイムモード`をオンにする．
