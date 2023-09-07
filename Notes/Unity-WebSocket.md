@@ -9,17 +9,33 @@
   # main.py
   
   from fastapi import FastAPI
-  import websockets
+  from websocket_router import router as websocket_router
 
   app = FastAPI()
+  app.include_router(websocket_router)
+  ```
+  ```python
+  # websocket_router.py
 
+  from fastapi import WebSocket
+  from fastapi.routing import WebSocketRoute
+  from fastapi.routing import APIRouter
+  
+  router = APIRouter()
+    
   @app.websocket("/ws")
   async def websocket_endpoint(websocket: websockets.WebSocket):
     await websocket.accept()
     try:
       while True:
         data = await websocket.receive_text()
-    except;
+
+        message_type = message.get("type")
+        if message_type == "transform":
+          # validation
+          await websocket.send(data)
+  
+    except:
       await ws.close()
   ```
 
@@ -30,7 +46,7 @@
 
 # クライアント側の処理を実装
 - 接続を確立し，リスナーを登録
-  ```cshirp
+  ```c#
   using WebSocketSharp;
 
   WebSocket ws = new WebSocket("ws://localhost:8000/ws");
@@ -45,9 +61,12 @@
 
   //　送信処理
   var data = new {
+      type = "transform",
       position = new { x = 1.0, y = 2.0, z = 3.0 },
       rotation = new { x = 0.0, y = 90.0, z = 0.0 }
   };
   string jsonData = JsonUtility.ToJson(data);
   ws.Send(jsonData);
+
+  ws.Close();
   ```
