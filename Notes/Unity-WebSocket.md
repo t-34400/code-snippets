@@ -67,7 +67,7 @@
   // Receive
   ws.OnMessage += (sender, e) => {
       var data = e.Data;
-      var parsedData = JsonUtility.FromJson<DataClass>(data);
+      // ...
   };
   
   ws.Connect();
@@ -83,3 +83,28 @@
 
   ws.Close();
   ```
+- Unityの多くのAPIはメインスレッドでのみ適切に動作するため，データを受信した際に基本的にはメインスレッドに返す必要がある．
+  ```c#
+  using System.Collections.Generic;
+  using WebSocketSharp;
+
+  var ws = new WebSocket("ws://localhost:8000/ws");
+  private Queue<string> receivedMessageQueue = new();
+
+  ws.OnMessage += (sender, e) =>
+  {
+    messageQueue.Enqueue(e.Data);
+  };
+
+  ws.Connect();
+
+  private void Update()
+  {
+      while (messageQueue.Count > 0)
+      {
+          var data = messageQueue.Dequeue();
+          var parsedData = JsonUtility.FromJson<DataClass>(data);
+
+          // ...
+      }      
+  
