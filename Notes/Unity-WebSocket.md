@@ -17,15 +17,35 @@
   ```python
   # websocket_router.py
 
+  import asyncio
+
   from fastapi import WebSocket
   from fastapi.routing import WebSocketRoute
   from fastapi.routing import APIRouter
+  import websockets
+
+  # Use OAuth2, etc. when higher security is required.
+  valid_api_key = "valid_api_key"
+
   
   router = APIRouter()
+
+
+  receiving_clients = set()
+  receiving_clients_lock = asyncio.Lock()
     
   @app.websocket("/ws")
   async def websocket_endpoint(websocket: websockets.WebSocket):
+    api_key = websocket.headers.get("api-key")
+    if not api_key or api_key != valid_api_key:
+      await websocket.close()
+      return
+  
     await websocket.accept()
+
+    async with receiving_clients_lock:
+        receiving_clients.add(websocket) 
+  
     try:
       while True:
         data = await websocket.receive_text()
@@ -33,9 +53,12 @@
         message_type = message.get("type")
         if message_type == "transform":
           # validation
-          await websocket.send(data)
-  
+          async with connected_clients_lock:
+            for client in connected_clients:
+              await client.send_text(data)
+    
     except:
+      connected_clients.remove(websocket)
       await ws.close()
   ```
 
@@ -50,6 +73,7 @@
   using WebSocketSharp;
 
   var ws = new WebSocket("ws://localhost:8000/ws");
+  ws.SetCookie(new Cookie("api-key", "valid_api_key"));
 
   ws.OnOpen += (sender, e) =>
   {
@@ -98,6 +122,8 @@
 
   ws.Connect();
 
+
+  // MonoBehaviour
   private void Update()
   {
       while (messageQueue.Count > 0)
