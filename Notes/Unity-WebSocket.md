@@ -51,7 +51,20 @@
 
   WebSocket ws = new WebSocket("ws://localhost:8000/ws");
 
-  // 受信処理
+  ws.OnOpen += (sender, e) =>
+  {
+      // ...
+  }
+  ws.OnError += (sender, e) =>
+  {
+      // ...
+  }
+  ws.OnClose += (sender, e) =>
+  {
+      // ...
+  }
+
+  // Receive
   ws.OnMessage += (sender, e) => {
       string data = e.Data;
       ParseAndApply(data);
@@ -59,7 +72,7 @@
   
   ws.Connect();
 
-  //　送信処理
+  //　Send
   var data = new {
       type = "transform",
       position = new { x = 1.0, y = 2.0, z = 3.0 },
