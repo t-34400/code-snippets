@@ -49,7 +49,7 @@
   ```c#
   using WebSocketSharp;
 
-  WebSocket ws = new WebSocket("ws://localhost:8000/ws");
+  var ws = new WebSocket("ws://localhost:8000/ws");
 
   ws.OnOpen += (sender, e) =>
   {
@@ -66,8 +66,8 @@
 
   // Receive
   ws.OnMessage += (sender, e) => {
-      string data = e.Data;
-      ParseAndApply(data);
+      var data = e.Data;
+      var parsedData = JsonUtility.FromJson(data);
   };
   
   ws.Connect();
@@ -78,7 +78,7 @@
       position = new { x = 1.0, y = 2.0, z = 3.0 },
       rotation = new { x = 0.0, y = 90.0, z = 0.0 }
   };
-  string jsonData = JsonUtility.ToJson(data);
+  var jsonData = JsonUtility.ToJson(data);
   ws.Send(jsonData);
 
   ws.Close();
