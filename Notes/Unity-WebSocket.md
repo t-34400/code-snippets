@@ -67,17 +67,17 @@
   // Receive
   ws.OnMessage += (sender, e) => {
       var data = e.Data;
-      var parsedData = JsonUtility.FromJson(data);
+      var parsedData = JsonUtility.FromJson<DataClass>(data);
   };
   
   ws.Connect();
 
   //　Send
-  var data = new {
-      type = "transform",
-      position = new { x = 1.0, y = 2.0, z = 3.0 },
-      rotation = new { x = 0.0, y = 90.0, z = 0.0 }
-  };
+  var data = new DataClass(
+      type: "transform",
+      position: new { x = 1.0, y = 2.0, z = 3.0 },
+      rotation: new { x = 0.0, y = 90.0, z = 0.0 }
+  );
   var jsonData = JsonUtility.ToJson(data);
   ws.Send(jsonData);
 
