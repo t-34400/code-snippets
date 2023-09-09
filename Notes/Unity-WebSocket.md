@@ -113,8 +113,8 @@
   using WebSocketSharp;
 
   var ws = new WebSocket("ws://localhost:8000/ws");
-  private Queue<string> receivedMessageQueue = new();
-  private object queueLockObject = new();
+  Queue<string> receivedMessageQueue = new();
+  object queueLockObject = new();
 
   ws.OnMessage += (sender, e) =>
   {
