@@ -114,10 +114,14 @@
 
   var ws = new WebSocket("ws://localhost:8000/ws");
   private Queue<string> receivedMessageQueue = new();
+  private object queueLockObject = new();
 
   ws.OnMessage += (sender, e) =>
   {
-    messageQueue.Enqueue(e.Data);
+    lock(queueLockObject)
+    {
+      messageQueue.Enqueue(e.Data);
+    }
   };
 
   ws.Connect();
@@ -126,12 +130,15 @@
   // MonoBehaviour
   private void Update()
   {
-      while (messageQueue.Count > 0)
+      lock(queueLockObject)
       {
-          var data = messageQueue.Dequeue();
-          var parsedData = JsonUtility.FromJson<DataClass>(data);
-
-          // ...
-      }      
+          while (messageQueue.Count > 0)
+          {
+              var data = messageQueue.Dequeue();
+              var parsedData = JsonUtility.FromJson<DataClass>(data);
+    
+              // ...
+          }
+      }
   }
   ```
