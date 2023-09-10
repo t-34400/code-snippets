@@ -34,8 +34,7 @@ async def send_endpoint(websocket: WebSocket, client_id: str):
           　client_keys[client_id] = key
 
         async with receiver_client_lock:
-            receiver_clients[client_id] = []
-        
+            receiver_clients[client_id] = []        
 
     try:
         while True:
@@ -61,15 +60,15 @@ async def send_endpoint(websocket: WebSocket, client_id: str):
         
         
 
-@app.websocket("/receive/{client_id}/")
-async def receive_endpoint(websocket: WebSocket, client_id: str):
+@app.websocket("/receive/{sender_client_id}/")
+async def receive_endpoint(websocket: WebSocket, sender_client_id: str):
     await websocket.accept()
     key = websocket.headers.get("key", "")
 
     try:
         async with sender_client_lock:
-            if client_id in clients and client_keys.get(client_id) == key:
-                send_websocket = clients.get(client_id)
+            if sender_client_id in clients and client_keys.get(sender_client_id) == key:
+                send_websocket = clients.get(sender_client_id)
 
                 if send_websocket:
                     await send_websocket.send_text(f"Receiver connected.")
@@ -78,9 +77,8 @@ async def receive_endpoint(websocket: WebSocket, client_id: str):
                 return
             
             async with receiver_client_lock:
-                receivers = receiver_clients.get(client_id, [])
-                receivers.append(websocket)
-                receiver_clients[clients_id] = receivers
+                if sender_client_id in receiver_clients and websocket not in receiver_clients[sender_client_id]:
+                    receiver_clients[sender_client_id].append(websocket)
 
             while True:
                 data = await websocket.receive_text()
@@ -88,8 +86,11 @@ async def receive_endpoint(websocket: WebSocket, client_id: str):
 
 
     except WebSocketDisconnect:
-        if
+        async with receiver_client_lock:
+            if sender_client_id in receiver_clients and websocket in receiver_clients[sender_client_id]:
+                receiver_clients[sender_client_id].remove(websocket)
+
 
 @app.get("/client_ids")
 async def get_client_ids():
-    return list(clients.keys())
+    return list(sender_clients.keys())
