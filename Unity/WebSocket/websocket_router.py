@@ -27,7 +27,7 @@ async def send_endpoint(websocket: WebSocket, client_id: str):
       　return
       
     else:
-      　key = websocket.headers.get("key")
+      　key = websocket.headers.get("key", "")
 
         async with sender_client_lock:
           　clients[client_id] = websocket
@@ -42,7 +42,10 @@ async def send_endpoint(websocket: WebSocket, client_id: str):
             data = await websocket.receive_text()
 
             async with receiver_client_lock:
-                
+                receivers = receiver_clients.get(client_id, [])
+
+            for receiver in receivers:
+                receiver.send_text(data)               
 
     except WebSocketDisconnect:
         async with sender_client_lock:
@@ -50,43 +53,43 @@ async def send_endpoint(websocket: WebSocket, client_id: str):
           　del client_keys[client_id]
 
         async with receiver_client_lock:
-            for receiver in receiver_clients[client_id]:
-                receiver.close()
-            
+            receivers = receiver_clients.get(client_id, [])
             del receiver_clients[client_id]
 
+        for receiver in receivers:
+            receiver.close() 
+        
+        
 
-@app.websocket("/receive/{client_id}/{key}")
-async def receive_endpoint(websocket: WebSocket, client_id: str, key: str):
+@app.websocket("/receive/{client_id}/")
+async def receive_endpoint(websocket: WebSocket, client_id: str):
     await websocket.accept()
+    key = websocket.headers.get("key", "")
 
     try:
-        # クライアントIDとキーの検証
-        if client_id in clients and client_keys.get(client_id) == key:
-            # 正しい組み合わせの場合、接続を確立
-            await websocket.send_text(f"Connected to the receiving endpoint.")
-            
-            # 送信側に接続確立の通知を送信
-            send_websocket = clients.get(client_id)
-            if send_websocket:
-                await send_websocket.send_text(f"Receiver connected.")
-            
-            while True:
-                # クライアントからのデータ受信
-                data = await websocket.receive_text()
-                
-                # サーバー側の処理
-                # ...
+        async with sender_client_lock:
+            if client_id in clients and client_keys.get(client_id) == key:
+                send_websocket = clients.get(client_id)
 
-        else:
-            # 正しくない組み合わせの場合、接続を拒否
-            await websocket.close()
+                if send_websocket:
+                    await send_websocket.send_text(f"Receiver connected.")
+            else:
+                await websocket.close()
+                return
+            
+            async with receiver_client_lock:
+                receivers = receiver_clients.get(client_id, [])
+                receivers.append(websocket)
+                receiver_clients[clients_id] = receivers
+
+            while True:
+                data = await websocket.receive_text()
+                # do something
+
 
     except WebSocketDisconnect:
-        # クライアントから切断された場合の処理
-        pass
+        if
 
-# IDリストを取得するエンドポイント
 @app.get("/client_ids")
 async def get_client_ids():
     return list(clients.keys())
