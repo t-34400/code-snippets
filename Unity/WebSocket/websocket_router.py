@@ -77,7 +77,6 @@ async def receive_endpoint(websocket: WebSocket, sender_client_id: str):
                     await send_websocket.send_text(f"Receiver connected.")
             
             else:
-                await websocket.close()
                 raise WebSocketException("Invalid security key.")
             
         async with receiver_client_lock:
