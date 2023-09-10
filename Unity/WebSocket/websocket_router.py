@@ -62,28 +62,29 @@ async def send_endpoint(websocket: WebSocket, client_id: str):
 
 @app.websocket("/receive/{sender_client_id}/")
 async def receive_endpoint(websocket: WebSocket, sender_client_id: str):
-    await websocket.accept()
-    key = websocket.headers.get("key", "")
 
     try:
         async with sender_client_lock:
+            key = websocket.headers.get("key", "")
+
             if sender_client_id in clients and client_keys.get(sender_client_id) == key:
+                await websocket.accept()
                 send_websocket = clients.get(sender_client_id)
 
                 if send_websocket:
                     await send_websocket.send_text(f"Receiver connected.")
+            
             else:
                 await websocket.close()
-                return
+                raise WebSocketException("Invalid security key.")
             
-            async with receiver_client_lock:
-                if sender_client_id in receiver_clients and websocket not in receiver_clients[sender_client_id]:
-                    receiver_clients[sender_client_id].append(websocket)
+        async with receiver_client_lock:
+            if sender_client_id in receiver_clients and websocket not in receiver_clients[sender_client_id]:
+                receiver_clients[sender_client_id].append(websocket)
 
-            while True:
-                data = await websocket.receive_text()
-                # do something
-
+        while True:
+            data = await websocket.receive_text()
+            # do something
 
     except WebSocketDisconnect:
         async with receiver_client_lock:
