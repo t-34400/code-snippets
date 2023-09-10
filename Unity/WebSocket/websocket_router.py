@@ -48,16 +48,18 @@ async def send_endpoint(websocket: WebSocket, client_id: str):
 
     except WebSocketDisconnect:
         async with sender_client_lock:
-          　del clients[client_id]
-          　del client_keys[client_id]
+            if client_id in clients:
+              　del clients[client_id]
+            if client_id in client_keys:
+              　del client_keys[client_id]
 
         async with receiver_client_lock:
             receivers = receiver_clients.get(client_id, [])
-            del receiver_clients[client_id]
+            if client_id in receiver_clients:
+                del receiver_clients[client_id]
 
         for receiver in receivers:
             receiver.close() 
-        
         
 
 @app.websocket("/receive/{sender_client_id}/")
@@ -94,4 +96,5 @@ async def receive_endpoint(websocket: WebSocket, sender_client_id: str):
 
 @app.get("/client_ids")
 async def get_client_ids():
-    return list(sender_clients.keys())
+    async with sender_client_lock:
+        return list(sender_clients.keys())
