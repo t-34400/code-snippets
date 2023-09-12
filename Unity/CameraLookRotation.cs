@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraLookRotation : MonoBehaviour
 {
-    [SerializeField] private transfotm targetObject = default!;
+    [SerializeField] private Transform targetObject = default!;
 
     [SerializeField] private float sensitivity = 2.0f;
     [SerializeField] private float zoomSpeed = 0.5f;
@@ -15,7 +15,7 @@ public class CameraLookRotation : MonoBehaviour
     [SerializeField] private float minAngleX = 0.0f;
     [SerializeField] private float maxAngleX = 75.0f;
 
-    private Vector3 currentDistance = default!;
+    private float currentDistance = default!;
     private Quaternion currentRotation = default!;
 
     private void Start()
@@ -52,7 +52,7 @@ public class CameraLookRotation : MonoBehaviour
         rotationEuler.x = Mathf.Clamp(rotationEuler.x, minAngleX, maxAngleX);
         currentRotation = Quaternion.Euler(rotationEuler);
 
-        offset = currentRotation * new Vector3(0.0f, 0.0f, currentDistance);
+        var offset = currentRotation * new Vector3(0.0f, 0.0f, currentDistance);
         transform.position = targetObject.position + offset;
     }
 
