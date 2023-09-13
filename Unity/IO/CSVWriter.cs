@@ -5,24 +5,20 @@ using System.Linq;
 
 class CSVWriter : MovementHistorySaver.IMovementHistorySaverComponent
 {
-    private readonly string filename;
+    private readonly string filePath;
     private readonly string labelLineText;
 
     private readonly Func<object[][]?> GetData;
 
-    private readonly ITargetDirectoryManager targetDirectoryManager;
     private readonly StreamWriterWrapper streamWriterWrapper = new();
 
     internal CSVWriter(
-        string filename, string labelLineText, Func<object[][]?> GetData, 
-        ITargetDirectoryManager targetDirectoryManager)
+        string filePath, string labelLineText, Func<object[][]?> GetData)
     {
-        this.filename = filename;
+        this.filePath = filePath;
         this.labelLineText = "Timestamp, " + labelLineText;
 
         this.GetData = GetData;
-        
-        this.targetDirectoryManager = targetDirectoryManager;
     }
 
     internal event Action? Opened;
@@ -30,8 +26,6 @@ class CSVWriter : MovementHistorySaver.IMovementHistorySaverComponent
 
     bool MovementHistorySaver.IMovementHistorySaverComponent.TryOpen(out string errorMessage)
     {
-        var filePath = targetDirectoryManager.GetFilePath(filename);
-
         var succeeded = streamWriterWrapper.TryOpen(filePath, out errorMessage) && streamWriterWrapper.TryWriteLine(labelLineText, out errorMessage);
         if(succeeded)
         {
@@ -65,29 +59,23 @@ class CSVWriter : MovementHistorySaver.IMovementHistorySaverComponent
     }
 }
 
-class CSVInitialDataWriter : MovementHistorySaver.IInitialDataSaveComponent
+class CSVInitialDataWriter
 {
-    private readonly string filename; 
+    private readonly string filePath; 
     private readonly Func<(string label, object data)[]?> GetDataList;
 
-    private readonly ITargetDirectoryManager targetDirectoryManager;
-    private readonly StreamWriterWrapper streamWriterWrapper;
+    private readonly StreamWriterWrapper streamWriterWrapper = new();
 
-    internal CSVInitialDataWriter(string filename, Func<(string label, object data)[]?> GetDataList, ITargetDirectoryManager targetDirectoryManager, StreamWriterWrapper streamWriterWrapper)
+    internal CSVInitialDataWriter(string filePath, Func<(string label, object data)[]?> GetDataList)
     {
-        this.filename = filename;
+        this.filePath = filePath;
 
         this.GetDataList = GetDataList;
-        
-        this.targetDirectoryManager = targetDirectoryManager;
-        this.streamWriterWrapper = streamWriterWrapper;
     }
 
     bool MovementHistorySaver.IInitialDataSaveComponent.TrySaveInitialData(out string errorMessage)
     {
         errorMessage = "";
-
-        var filePath = targetDirectoryManager.GetFilePath(filename);
 
         var dataList = GetDataList();
         if(dataList == null)
