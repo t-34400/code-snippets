@@ -1,9 +1,9 @@
 from fastapi import WebSocket
-from fastapi.routing import WebSocketRoute
+from fastapi import WebSocketDisconnect, WebSocketException
 from fastapi.routing import APIRouter
 
-from typing import Dict
 import asyncio
+from typing import List, Dict
 
 
 router = APIRouter()
@@ -12,10 +12,10 @@ valid_api_key = "valid_api_key"
 
 sender_clients: Dict[str, WebSocket] = {}
 sender_client_keys: Dict[str, str] = {}
-sender_client_lock = ayncio.Lock()
+sender_client_lock = asyncio.Lock()
 
 receiver_clients: Dict[str, List[WebSocket]] = {}
-receiver_client_lock = ayncio.Lock()
+receiver_client_lock = asyncio.Lock()
 
 
 @app.websocket("/send/{client_id}/")
@@ -23,15 +23,15 @@ async def send_endpoint(websocket: WebSocket, client_id: str):
     await websocket.accept()
 
     if client_id in sender_clients:
-      　await websocket.close()
-      　return
+        await websocket.close()
+        return
       
     else:
-      　key = websocket.headers.get("key", "")
+        key = websocket.headers.get("key", "")
 
         async with sender_client_lock:
-          　clients[client_id] = websocket
-          　client_keys[client_id] = key
+            sender_clients[client_id] = websocket
+            sender_client_keys[client_id] = key
 
         async with receiver_client_lock:
             receiver_clients[client_id] = []        
@@ -48,10 +48,10 @@ async def send_endpoint(websocket: WebSocket, client_id: str):
 
     except WebSocketDisconnect:
         async with sender_client_lock:
-            if client_id in clients:
-              　del clients[client_id]
-            if client_id in client_keys:
-              　del client_keys[client_id]
+            if client_id in sender_clients:
+                del sender_clients[client_id]
+            if client_id in sender_client_keys:
+                del sender_client_keys[client_id]
 
         async with receiver_client_lock:
             receivers = receiver_clients.get(client_id, [])
@@ -69,9 +69,9 @@ async def receive_endpoint(websocket: WebSocket, sender_client_id: str):
         async with sender_client_lock:
             key = websocket.headers.get("key", "")
 
-            if sender_client_id in clients and client_keys.get(sender_client_id) == key:
+            if sender_client_id in sender_client_keys and sender_client_keys.get(sender_client_id) == key:
                 await websocket.accept()
-                send_websocket = clients.get(sender_client_id)
+                send_websocket = sender_clients.get(sender_client_id)
 
                 if send_websocket:
                     await send_websocket.send_text(f"Receiver connected.")
