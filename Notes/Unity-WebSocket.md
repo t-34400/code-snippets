@@ -71,6 +71,7 @@
 - 接続を確立し，リスナーを登録
   ```c#
   using WebSocketSharp;
+  using WebSocketSharp.Net;
 
   var ws = new WebSocket("ws://localhost:8000/ws");
   ws.SetCookie(new Cookie("api-key", "valid_api_key"));
@@ -78,15 +79,15 @@
   ws.OnOpen += (sender, e) =>
   {
       // ...
-  }
+  };
   ws.OnError += (sender, e) =>
   {
       // ...
-  }
+  };
   ws.OnClose += (sender, e) =>
   {
       // ...
-  }
+  };
 
   // Receive
   ws.OnMessage += (sender, e) => {
