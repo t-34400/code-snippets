@@ -16,26 +16,24 @@ public class CameraLookRotation : MonoBehaviour
     [SerializeField] private float maxAngleX = 75.0f;
 
     private float currentDistance = default!;
-    private Quaternion currentRotation = default!;
 
     private void Start()
     {
         var offset = transform.position - targetObject.position;
         
         currentDistance = offset.magnitude;
-        currentRotation = Quaternion.FromToRotation(Vector3.forward, offset);
 
         UpdateTransform();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButton(2))
+        if (Input.GetMouseButton(1))
         {
             var mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
             var rotationDelta = mouseDelta * sensitivity;
 
-            currentRotation = Quaternion.Euler(rotationDelta.x, rotationDelta.y, 0.0f) * currentRotation;
+            transform.rotation *= Quaternion.Euler(-rotationDelta.y, rotationDelta.x, 0.0f);
         }
 
         var scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -48,12 +46,21 @@ public class CameraLookRotation : MonoBehaviour
     {
         currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
         
-        var rotationEuler = currentRotation.eulerAngles;
-        rotationEuler.x = Mathf.Clamp(rotationEuler.x, minAngleX, maxAngleX);
-        currentRotation = Quaternion.Euler(rotationEuler);
+        var rotationEuler = transform.rotation.eulerAngles;
+        if(rotationEuler.x > 180.0f || rotationEuler.x < minAngleX)
+        {
+            rotationEuler.x = minAngleX;
+        }
+        else if(rotationEuler.x > maxAngleX)
+        {
+            rotationEuler.x = maxAngleX;
+        }
+        transform.rotation = Quaternion.Euler(rotationEuler);
 
-        var offset = currentRotation * new Vector3(0.0f, 0.0f, currentDistance);
-        transform.position = targetObject.position + offset;
+        var offset = transform.rotation * new Vector3(0.0f, 0.0f, currentDistance);
+
+        transform.position = targetObject.position - offset;
+        transform.rotation = Quaternion.LookRotation(offset, Vector3.up);
     }
 
     private void OnValidate()
