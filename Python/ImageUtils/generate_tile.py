@@ -9,12 +9,12 @@ def main(args):
     for i, image_file in enumerate(args.image_paths):
         image = Image.open(image_file)
         image = image.resize((args.tile_width, args.tile_height))
-        x = i % 2 * args.tile_width
-        y = i // 2 * args.tile_height
+        x = i % args.num_cols * args.tile_width
+        y = i // args.num_cols * args.tile_height
         result.paste(image, (x, y))
 
     result.save(args.output_path)
-    print(f"Successfully generate a tile image: {args.output_path}")
+    print(f"Successfully generate the texture tile: {args.output_path}")
 
 
 if __name__ == "__main__":
