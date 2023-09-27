@@ -1,5 +1,7 @@
 #nullable enable
 
+using UnityEngine;
+
 public static class BoxAlignmentHelper
 {
     public Quaternion GetTargetWorldRotation()
