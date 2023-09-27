@@ -11,6 +11,12 @@
   OVRInput.GetUp(OVRInput.Button.One, OVRInput.Controller.RTouch); // 離したフレームでtrue
   ```
 
+## トラブルシューティング
+- 影がピクセライズされる
+  - `Project Settings` > `Quality`の以下の項目を確認
+    - `Shadow Distance`が非常に大きい値になっていないか
+    - AndroidのデフォルトのLevelがMediumなどになっていないか
+
 ## Interaction SDK
 - [Create Grab Interactions](https://developer.oculus.com/documentation/unity/unity-isdk-create-hand-grab-interactions/)に従ってGrab interactionを設定する．
     - Grabbableは，グラブできるオブジェクトに設定する．
