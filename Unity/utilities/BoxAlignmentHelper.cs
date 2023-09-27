@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class BoxAlignmentHelper
 {
-    public Quaternion GetTargetWorldRotation()
+    public static Quaternion GetTargetWorldRotation()
     {
         var handleRotation = boxObject.rotation;
 
