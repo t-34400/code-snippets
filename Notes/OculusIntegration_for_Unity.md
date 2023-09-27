@@ -12,7 +12,7 @@
   ```
 
 ## トラブルシューティング
-- 影がピクセライズされる
+- 影がピクセレートされる
   - `Project Settings` > `Quality`の以下の項目を確認
     - `Shadow Distance`が非常に大きい値になっていないか
     - AndroidのデフォルトのLevelがMediumなどになっていないか
