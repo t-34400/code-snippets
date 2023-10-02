@@ -1,1 +1,4 @@
 # Anki
+
+- Mathematics
+  - Gaussian integral
