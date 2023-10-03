@@ -43,6 +43,10 @@
             - プレイモードを抜けて，Load From Collectionを押す．
             - これにより，`HandGrabInteractable`が自動で追加される．
             - 逆の手を追加したい場合は，`HandGrabInteractable`の`Hand Grab Interactable`の`Create Mirrored HandGrabInteractable`をクリックするか，同じ手順で逆の手も設定する．
+        - このままでは，指がオブジェクトを貫通してしまうので，以下の手順で`HandGrabVisual`を有効化する．
+          - `OVRCameraRig`/`OVRInteraction`/`OVRControllerHands`/`LeftControllerHand`/`ControllerHandInteractors`/`HandGrabAPI`/`Visuals`/`HandGrabVisual`を有効化する．
+          - `Synthetic Hand`に`OVRLeftHandSynthetic`をアタッチする．
+          - 逆の手や，`OVRHands`についても同様の手順を行う．
     - Hover/Selectイベントを取得する場合は，`InteractableUnityEventWrapper`コンポーネントを使うと楽． 
          
 ## Haptic feedback
