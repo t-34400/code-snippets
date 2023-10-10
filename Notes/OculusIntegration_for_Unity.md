@@ -47,8 +47,36 @@
           - `OVRCameraRig`/`OVRInteraction`/`OVRControllerHands`/`LeftControllerHand`/`ControllerHandInteractors`/`HandGrabAPI`/`Visuals`/`HandGrabVisual`を有効化する．
           - `Synthetic Hand`に`OVRLeftHandSynthetic`をアタッチする．
           - 逆の手や，`OVRHands`についても同様の手順を行う．
-    - Hover/Selectイベントを取得する場合は，`InteractableUnityEventWrapper`コンポーネントを使うと楽． 
-         
+    - Hover/Selectイベントを取得する場合は，`InteractableUnityEventWrapper`コンポーネントを使うと楽．
+ 
+- Gesture Control
+  - `OVRControllerHands`/`Left(Right)ControllerHand`/`ControllerHandFeaturesLeft(Right)`に必要なデータプロバイダコンポーネントをアタッチする
+    - `Finger Feature State Provider`
+      - 指の状態の判定を行いデータを供給する
+      - Finger State Thresholdsに各指の閾値を設定する．
+        - 基本的にはデフォルト値で良い（？）
+          - Thumb: `DefaultThumbFeatureStateThresholds`
+          - Index: `IndexFingerFeatuerStateThresholds`
+          - Middle: `MiddleFingerFeatureStateThresholds`
+          - Ring: `DefaultFingerFeatureStateThresholds`
+          - Pinky: `DefaultFingerFeatureStateThresholds`
+    - `TransformFeatureStateProvider`
+      - 手の向きの判定を行いデータを供給する．
+    - `JointDeltaProvider`
+      - 手の関節のポーズの変化に関するデータを供給する．
+    - データプロバイダを参照するオブジェクトをプレハブ化する際に，何度もアタッチするのが面倒なら，`...ProviderRef`コンポーネントをプレハブ側に用意し，プレハブ内からはこのRefコンポーネントを参照するようにする．
+  - Active Stateを定義する．
+    - `ShapeRecognizerActiveState`: 指の状態を指定するカスタムポーズを定義し，状態が一致したらtrue, しなかったらfalseを返す．
+    - `TransformRecognizerActiveState`: 手の向きが指定したものであれば指定したbool値を返す．
+      - TransformFeatureConfigsから判定を行う向きとbool値を指定
+    - `JointVelocityActiveState`: 指定したジョイントの速度が指定した値以上であるときにtrueを返す．
+    - `JointRotationActiveState`: 指定したジョイントの回転速度が指定した値以上であるときにtrueを返す．
+    - `ActiveStateGroup`: 複数のActive Stateを同時に評価する(接続はAND, OR, XORから選択)．
+    - `ActiveStateSelector`: 利用するActive Stateを指定
+    - `SelectorUnityEventWrapper`: Selectorの状態が変化した際にUnityEventを発行する．
+- 参考文献: [Oculus Hand Interaction: Pose detection](https://immersive-insiders.com/blog/oculus-hand-interaction-pose-detection)
+
+
 ## Haptic feedback
 - 呼び出したいスクリプトのアセンブリに，Oculus.VRへの参照を追加する．
 - 以下のメソッドでhapticを発生させる（半永続的に発生する）．
