@@ -71,6 +71,7 @@
       - TransformFeatureConfigsから判定を行う向きとbool値を指定
     - `JointVelocityActiveState`: 指定したジョイントの速度が指定した値以上であるときにtrueを返す．
     - `JointRotationActiveState`: 指定したジョイントの回転速度が指定した値以上であるときにtrueを返す．
+    - `ColliderContainsHandJointActiveState`: 指定したジョイントがEntryコライダーに入ってから，Exitコライダーを抜けるまでの間trueを返す．
     - `ActiveStateGroup`: 複数のActive Stateを同時に評価する(接続はAND, OR, XORから選択)．
     - `ActiveStateSelector`: 利用するActive Stateを指定
     - `SelectorUnityEventWrapper`: Selectorの状態が変化した際にUnityEventを発行する．
