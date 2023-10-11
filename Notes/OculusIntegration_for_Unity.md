@@ -18,6 +18,8 @@
     - AndroidのデフォルトのLevelがMediumなどになっていないか
 
 ## Interaction SDK
+
+### Grab interaction
 - [Create Grab Interactions](https://developer.oculus.com/documentation/unity/unity-isdk-create-hand-grab-interactions/)に従ってGrab interactionを設定する．
     - Grabbableは，グラブできるオブジェクトに設定する．
         - 非Kinematicなオブジェクトに，グラブ中の物理演算を適用する場合は[`PhysicsGrabbable`](https://developer.oculus.com/documentation/unity/unity-isdk-using-with-physics/#physicsgrabbable)を使う
@@ -49,7 +51,7 @@
           - 逆の手や，`OVRHands`についても同様の手順を行う．
     - Hover/Selectイベントを取得する場合は，`InteractableUnityEventWrapper`コンポーネントを使うと楽．
  
-- Gesture Control
+#### Gesture Control
   - `OVRControllerHands`/`Left(Right)ControllerHand`/`ControllerHandFeaturesLeft(Right)`に必要なデータプロバイダコンポーネントをアタッチする
     - `Finger Feature State Provider`
       - 指の状態の判定を行いデータを供給する
@@ -77,6 +79,26 @@
     - `SelectorUnityEventWrapper`: Selectorの状態が変化した際にUnityEventを発行する．
 - 参考文献: [Oculus Hand Interaction: Pose detection](https://immersive-insiders.com/blog/oculus-hand-interaction-pose-detection)
 
+### Swipe interaction
+- サンプルのAssets/Oculus/Interaction/Samples/Prefabs/HandGesture/SwipeForwardGestureを使うのが楽
+- 以下のように使用する．
+  - `ProviderRefs`に上記のGesture Controlで追加したプロバイダコンポーネントをアタッチ
+  - `SwipeForwardGesture`の`HandRef`に`LeftControllerHand`などをアタッチ
+- 簡単な説明
+  - `ProviderRefs`: ハンドデータのプロバイダへの参照を登録し，他のコンポーネントから参照する．
+  - `SwipeForwardGesture`: 本体．
+    - `Hand Ref`: ハンドコンポーネントへの参照を登録．
+    - `Active State Selector`: `Selector Unity Event Wrapper`にアタッチして，trueになった場合Unity Eventとして発行？
+    - `Sequence Active State`: 下記の`Sequence`がコンプリートしたらtrueを返す．
+    - `Sequence`: `HandPointedForward`がtrueになったのち, `HandSwiping`がtrueになった場合に，HandMovingがtrueの間trueを返す．
+  - `HandPointedForward`: 手が前方を向いているとtrueを返す
+  - `HandSwiping`: 以下の`HandSideways`と`HandMoving`, `HandRotation`がtrueの場合にtrueを返す．
+    - `HandSideways`: 手首がワールド上方もしくは視線の座標系(？)の上方を向いており，かつ指が閉じていない場合にtrueを返す．
+    - `HandMoving`: 人差し指が手のひらの前方に移動したときにtrueを返す．
+    - `HandRotation`: 手の付け根の関節が縮む方向に回転したときにtrueを返す．
+- このサンプルでは，手を内側（左手なら右方向，右手なら左方向）にスワイプする場合にしかActivateされない．
+  - 逆方向に動かした場合についても検知したいなら，`HandMoving`の`Hand Axis`をPalm Backwardに，`Hand Rotation`の`Hand Axis`をExtensionに変更する．
+  - ただし，スワイプした手を戻した時にも，逆方向のスワイプが反応してしまうため，何らかのクールタイムを設けた方がよさそう．
 
 ## Haptic feedback
 - 呼び出したいスクリプトのアセンブリに，Oculus.VRへの参照を追加する．
