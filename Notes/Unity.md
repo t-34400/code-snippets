@@ -17,6 +17,7 @@
   - 発生した状況は以下の通り．
     - `SerializeField` Attributeのついた`Transform`フィールドを持つ`Serializable` Attribute classを定義．
     - そのクラスの`List`を，`MonoBehaviour`のサブクラスに`SerializeField` Attributeフィールドとして定義．
+    - そのコンポーネントを実装したプレハブのインスタンスをシーン上に配置
 
 ## Nullable
 - Project settings > Player > Other settingsのAdditional Compiler Argumentsに以下を追加する．
