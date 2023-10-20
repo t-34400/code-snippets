@@ -5,6 +5,11 @@
   ```c#
   gameObject.GetComponent<Hoge>().enabled = false;
   ```
+- RayCastは，コライダーが薄すぎると失敗する(0.005くらい必要)．
+- シーンのルートからのオブジェクトパスを取得する方法
+  ```c#
+  raycastHit.collider.GetComponentsInParent<Transform>().Select(t => t.name).Reverse().ToArray()
+  ```
 
 ## Nullable
 - Project settings > Player > Other settingsのAdditional Compiler Argumentsに以下を追加する．
