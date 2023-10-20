@@ -5,11 +5,18 @@
   ```c#
   gameObject.GetComponent<Hoge>().enabled = false;
   ```
-- RayCastは，コライダーが薄すぎると失敗する(0.005くらい必要)．
 - オブジェクトのシーンのルートからのパスを取得する方法
   ```c#
   gameObject.GetComponentsInParent<Transform>().Select(t => t.name).Reverse().ToArray()
   ```
+## トラブルシューティング
+- `Ray`が特定のコライダーをランダムに貫通する．
+  - `Ray`は，コライダーが薄すぎると貫通する(防ぐには0.005くらい必要)．
+- `Transform`の`SerializeField`に対し，インスペクタ上でオブジェクトがアタッチされているにもかかわらず，Missing Reference Exceptionが発生する．
+  - とりあえず，`Transform`から`GameObject`に変更すると直った（原因不明）．
+  - 発生した状況は以下の通り．
+    - `SerializeField` Attributeのついた`Transform`フィールドを持つ`Serializable` Attribute classを定義．
+    - そのクラスの`List`を，`MonoBehaviour`のサブクラスに`SerializeField` Attributeフィールドとして定義．
 
 ## Nullable
 - Project settings > Player > Other settingsのAdditional Compiler Argumentsに以下を追加する．
