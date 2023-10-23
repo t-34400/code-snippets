@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace VRScenario
+namespace Utility
 {
     class CameraTextureReplacer : MonoBehaviour
     {
