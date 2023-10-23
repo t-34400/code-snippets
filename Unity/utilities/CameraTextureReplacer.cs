@@ -15,9 +15,12 @@ namespace Utility
         [SerializeField] private Vector2 captureSize = default!;
         [SerializeField] private Vector2Int textureSize = default!;
 
+        private readonly List<Texture2D> generatedTextures = new();
+
         public void Generate()
         {
             var texture = GenerateTexture();
+            generatedTextures.Add(texture);
             ApplyTexture(texture);
         }
 
@@ -57,5 +60,11 @@ namespace Utility
 
             return capturedTexture;            
         }
+
+        private void OnDestroy()
+        {
+            generatedTextures.ForEach(texture => Destroy(texture));
+        }
+
     }
 }
