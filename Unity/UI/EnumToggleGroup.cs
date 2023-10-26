@@ -38,16 +38,54 @@ namespace UnityHelper
         public bool TryGetValue(out T value)
         {
             var index = enumToggles.FindIndex(toggle => toggle.IsOn);
-            value = enumToggles.ElementAtOrDefault(index).Value;
-            return index > -1;
+            if(index > -1)
+            {
+                value = enumToggles.ElementAt(index).Value;
+                return true;
+            }
+            else
+            {
+                value = default!;
+                return false;
+            }
         }
 
-        public void SetValue(T value)
+        public void SetValue(T value, bool isOn = true)
         {
             var index = enumToggles.FindIndex(toggle => Equals(toggle.Value, value));
             if(index > -1)
             {
-                enumToggles.ElementAt(index).IsOn = true;
+                enumToggles.ElementAt(index).IsOn = isOn;
+            }
+        }
+
+        public bool TryGetFirstInteractableToggle(out T value)
+        {
+            var index = enumToggles.FindIndex(toggle => toggle.Interactable);
+            if(index > -1)
+            {
+                value = enumToggles.ElementAt(index).Value;
+                return true;
+            }
+            else
+            {
+                value = default!;
+                return false;
+            }
+        }
+
+        public bool TryGetInteractableState(T value, out bool state)
+        {
+            var index = enumToggles.FindIndex(toggle => Equals(toggle.Value, value));
+            if(index > -1)
+            {
+                state = enumToggles.ElementAt(index).Interactable;
+                return true;
+            }
+            else
+            {
+                state = false;
+                return false;
             }
         }
 
@@ -59,7 +97,7 @@ namespace UnityHelper
                 enumToggles.ElementAt(index).Interactable = interactable;
             }
         }
-
+        
         private void OnToggleValueChanged(T enumValue, bool value)
         {
             if(value == true)
