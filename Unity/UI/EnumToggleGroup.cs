@@ -93,15 +93,21 @@ namespace UnityHelper
         {
             add 
             {
-                var unityAction = new UnityAction<bool>(isOn => value.Invoke(Value, isOn)); 
-                toggle.onValueChanged.AddListener(unityAction);
-                unityActionMap[value] = unityAction; 
+                if(toggle != null)
+                {
+                    var unityAction = new UnityAction<bool>(isOn => value.Invoke(Value, isOn));
+                    toggle.onValueChanged.AddListener(unityAction);
+                    unityActionMap[value] = unityAction; 
+                }
             }
             remove
             {
                 if(unityActionMap.TryGetValue(value, out var unityAction))
                 {
-                    toggle.onValueChanged.RemoveListener(unityAction);
+                    if(toggle != null)
+                    {
+                        toggle.onValueChanged.RemoveListener(unityAction);
+                    }
                     unityActionMap.Remove(value);
                 }
             }
