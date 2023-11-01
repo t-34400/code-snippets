@@ -49,7 +49,11 @@
        }
    }
    ```
-6. 
+6. unity-webviewをカスタムパッケージ化する．
+   - Plugins/unity-webviewを右クリックし`Show in Explorer`を選択する．
+   - `net.gree.unity-webview@...`をプロジェクト直下のPackagesにコピーし，末尾のバージョン情報を削除する．
+   - 
+8. 
 
 
 
