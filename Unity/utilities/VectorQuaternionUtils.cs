@@ -2,6 +2,19 @@ using UnityEngine;
 
 public static class VectorQuaternionUtils
 {
+    public static Quaternion GetSymmetricMirroredRotation(Quaternion rotation, Quaternion defaultRotation, Vector3 mirrorNormal)
+    {
+        var inverseDefaultRotation = Quaternion.Inverse(defaultRotation);
+        
+        var rotationDelta = rotation * inverseDefaultRotation;
+
+        rotationDelta.ToAngleAxis(out var angle, out var axis);
+
+        var mirroredAxis = GetMirroredVector(axis, mirrorNormal);
+
+        return Quaternion.AngleAxis(-angle, mirroredAxis) * Quaternion.Euler(0, 180, 0) * defaultRotation;
+    }
+    
     public static Quaternion GetMirroredRotation(Quaternion rotation, Quaternion defaultRotation, Vector3 mirrorNormal)
     {
         var inverseDefaultRotation = Quaternion.Inverse(defaultRotation);
