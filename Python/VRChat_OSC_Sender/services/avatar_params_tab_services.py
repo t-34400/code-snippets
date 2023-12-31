@@ -1,14 +1,14 @@
+from models.avatar_param_sender_params import AvatarParamSenderParams
+
 class AvatarParamsTabServices:
-    def __init__(self, sender, address_var, selected_type_var, value_var):
+    def __init__(self, sender, params: AvatarParamSenderParams):
         self.sender = sender
-        self.address_var = address_var
-        self.selected_type_var = selected_type_var
-        self.value_var = value_var
+        self.params = params
 
     def send_avatar_params(self):
-        address = self.address_var.get()
-        type = self.selected_type_var.get()
-        value_string = self.value_var.get()
+        address = self.params.address_var.get()
+        type = self.params.selected_type_var.get()
+        value_string = self.params.value_var.get()
 
         value = AvatarParamsTabServices.try_parse(type, value_string)
         if value is not None:
@@ -21,7 +21,9 @@ class AvatarParamsTabServices:
             elif type == "Float":
                 return float(value_string)
             elif type == "Bool":
-                return bool(value_string)
+                if value_string == "False" or value_string == "false":
+                    return False
+                return bool(value_string) # return false if value_string is empty
             else:
                 print(f"Failed to parse value string. Unknown value type: {type}")
                 return None
