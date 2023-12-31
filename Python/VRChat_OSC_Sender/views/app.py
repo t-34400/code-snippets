@@ -1,6 +1,7 @@
 from tkinter import ttk
 from .avatar_params_tab import AvatarParamsTab
 from .input_controller_tab import InputControllerTab
+from .chatbox_tab import ChatboxTab
 from .osc_config_tab import OSCConfigTab
 
 class App:
@@ -17,6 +18,10 @@ class App:
         self.input_controller_frame = ttk.Frame(self.notebook)
         InputControllerTab(self.input_controller_frame, sender)
         self.notebook.add(self.input_controller_frame, text="Input Controller")
+
+        self.chatbox_tab_frame = ttk.Frame(self.notebook)
+        ChatboxTab(self.chatbox_tab_frame, sender)
+        self.notebook.add(self.chatbox_tab_frame, text="Chatbox")
 
         self.osc_config_frame = ttk.Frame(self.notebook)
         OSCConfigTab(self.osc_config_frame)
