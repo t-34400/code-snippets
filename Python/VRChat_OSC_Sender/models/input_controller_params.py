@@ -43,7 +43,7 @@ class InputControllerParams:
         
         self.button_vars = {}
         for button in self.buttons:
-            self.button_vars[button] = tk.BooleanVar()
+            button_var = tk.BooleanVar()
+            button_var.set(False)
+            self.button_vars[button] = button_var
         
-        self.chat_text_var = tk.StringVar()
-        self.keyboard_bypass_var = tk.BooleanVar()
