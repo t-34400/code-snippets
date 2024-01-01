@@ -6,7 +6,7 @@ from .tracker_tab import TrackerTab
 from .osc_config_tab import OSCConfigTab
 
 class App:
-    def __init__(self, root, sender):
+    def __init__(self, root, sender, sender_config, receiver_config):
         self.root = root
         self.root.title("VRChat OSC Sender")
 
@@ -29,7 +29,7 @@ class App:
         self.notebook.add(self.tracker_tab_frame, text="Trackers")
 
         self.osc_config_frame = ttk.Frame(self.notebook)
-        OSCConfigTab(self.osc_config_frame)
+        OSCConfigTab(self.osc_config_frame, sender_config, receiver_config)
         self.notebook.add(self.osc_config_frame, text="OSC config")
 
         self.notebook.pack(padx=10, pady=10)
