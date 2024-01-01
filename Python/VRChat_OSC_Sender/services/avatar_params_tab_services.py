@@ -14,6 +14,9 @@ class AvatarParamsTabServices:
         if value is not None:
             self.sender.send(address, [value])
 
+    def send_new_avatar_params(self, address, value):
+        self.sender.send(address, [value])
+
     def try_parse(type, value_string):
         try:
             if type == "Int":

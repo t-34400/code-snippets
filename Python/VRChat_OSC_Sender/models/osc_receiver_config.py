@@ -16,5 +16,6 @@ class OSCReceiverConfig:
         self.config_change_callbacks.append(callback)
 
     def change_config(self):
+        print(f"{len(self.config_change_callbacks)=}")
         for callback in self.config_change_callbacks:
             callback()

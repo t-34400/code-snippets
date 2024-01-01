@@ -6,14 +6,14 @@ from .tracker_tab import TrackerTab
 from .osc_config_tab import OSCConfigTab
 
 class App:
-    def __init__(self, root, sender, sender_config, receiver_config):
+    def __init__(self, root, sender, sender_config, receiver_config, received_avatar_params):
         self.root = root
         self.root.title("VRChat OSC Sender")
 
         self.notebook = ttk.Notebook(root)
 
         self.avatar_params_frame = ttk.Frame(self.notebook)
-        AvatarParamsTab(self.avatar_params_frame, sender)
+        AvatarParamsTab(self.avatar_params_frame, sender, received_avatar_params)
         self.notebook.add(self.avatar_params_frame, text="Avatar params")
 
         self.input_controller_frame = ttk.Frame(self.notebook)
