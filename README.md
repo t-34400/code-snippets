@@ -1,6 +1,11 @@
 <h1> Code-Snippet Collection</h1>
 This repository is a collection of code snippets that are frequently used or have generality. These snippets are intended to provide useful code templates for various tasks.
 
+# Gists repository
+- [Unity-gists](https://github.com/t-34400/Unity-gists)
+- [Android-gists](https://github.com/t-34400/Android-gists)
+- [Python-gists](https://github.com/t-34400/Python-gists)
+
 # Table of Contents
 - **Android API**
     - Image Utils
