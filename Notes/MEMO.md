@@ -4,6 +4,7 @@
 # Android API
 - LiveDataのvalueはobserverがいないと更新されない
 - LiveDataにすでに値がセットされている場合，observerを登録すると即座にコールされる
+- ランタイムの権限が必要かどうかは，API referenceのProtection levelを見れば良い（dangerousなら必要）
 
 # Blender
 - multiprocessingモジュールで並列処理はできるが，sys.pathの問題で，メインプロセス以外のBlender APIモジュールのimportに失敗する．
