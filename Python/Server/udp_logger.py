@@ -26,7 +26,7 @@ async def main():
 
     transport, _ = await loop.create_datagram_endpoint(
         lambda: EchoServerProtocol(),
-        local_addr=('127.0.0.1', 12351))
+        local_addr=('0.0.0.0', 9000))
 
     try:
         await asyncio.sleep(3600)
