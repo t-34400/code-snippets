@@ -4,10 +4,12 @@
   - [ドキュメント](#ドキュメント)
     - [基礎的な概念](#基礎的な概念)
     - [使い方](#使い方)
-  - [導入](#導入)
+      - [導入](#導入)
       - [PostgreSQLサーバーの起動](#postgresqlサーバーの起動)
       - [Postgresサーバーにアクセス](#postgresサーバーにアクセス)
       - [DBの作成](#dbの作成)
+    - [SQLの基礎](#sqlの基礎)
+      - [Tableの作成](#tableの作成)
   - [Glossary](#glossary)
 
 
@@ -21,7 +23,7 @@ PDFでダウンロードもできる．
         - Supervisor serverが常に実行され，clientからアクセスされるたびに新しいプロセスをForkする
 
 ### 使い方
-## 導入
+#### 導入
 PostgreSQLのインストーラを[公式サイト](https://www.postgresql.org/download/)から取得しインストールする．
 インストールしたbinディレクトリにパスを通す．
 
@@ -48,7 +50,26 @@ create database <db_name>;
 ```
 db_nameのデフォルト値は`default`．
 
-
+### SQLの基礎
+#### Tableの作成
+```bash
+CREATE TABLE <table_name> (
+    <column_name> <type>,
+);
+```
+- typeの例
+    - `int`: 32-bit integer
+    - `smallint`: 16-bit integer
+    - `real`: 32-bit floating point number
+    - `double` precision: 64-bit floating point number
+    - `char(N)`: Fixed-length string (space padding)
+    - `varchar(N)`: Variable-length string
+    - `date`: Date
+    - `time`: Time
+    - `timestamp`: Date and time
+    - `interval`: Time interval
+    - PostgreSQL-specific data type
+      - `point`: 2D geometric point represented by x and y coordinates
 
 
 ## Glossary
