@@ -9,9 +9,14 @@
       - [Postgresサーバーにアクセス](#postgresサーバーにアクセス)
       - [DBの作成](#dbの作成)
     - [SQLの基礎](#sqlの基礎)
+      - [Operators](#operators)
       - [Tableの作成](#tableの作成)
       - [Tableの削除](#tableの削除)
       - [Rowの追加](#rowの追加)
+      - [Query](#query)
+        - [Table間の結合](#table間の結合)
+        - [Aggregate functions](#aggregate-functions)
+      - [flat-textファイルからの読み込み](#flat-textファイルからの読み込み)
   - [Glossary](#glossary)
 
 
@@ -56,13 +61,20 @@ create database <db_name>;
 db_nameのデフォルト値は`default`．
 
 ### SQLの基礎
+#### Operators
+- Unary
+  - `+`, `-`
+- Binary
+  - `+`,`-`,`*`,`/`: Arithmetic operators
+  - `||`: 文字列の結合
+  - 
 #### Tableの作成
 ```bash
 CREATE TABLE <schema_name>.<table_name> (
     <column_name> <type> <constraint>,
     ...
     <constraint>
-)
+);
 ```
 - typeの例
   - `int`: 32-bit integer
@@ -88,14 +100,50 @@ CREATE TABLE <schema_name>.<table_name> (
 
 #### Tableの削除
 ```bash
-DROP TABLE <table_name>
+DROP TABLE <table_name>;
 ```
 
 #### Rowの追加
 ```bash
-INSERT INTO <table_name> VALUES (<value>, ...)
+INSERT INTO <table_name> (<column_name>, ...) VALUES (<value>, ...), ...;
 ```
+- 成功した場合，`INSERT <AFFECTED_ROWS_COUNT> <INSERTED_ROW_COUNT>`と出力される．
 
+#### Query
+```bash
+SELECT <column_expresiion>, ... 
+    FROM <table_name> 
+    WHERE <condition> 
+    ORDER BY <column_expresiion>;
+```
+- カラムの部分はexpressionを使うことができる
+  - サンプル: `SELECT (column_1 + column_2)/2 AS avg FROM my_table`
+- 一意のデータを取得するときには，`SELECT DISTINCT`を使う．
+
+##### Table間の結合
+```bash
+SELECT <column_expression> 
+    FROM <first_table_name>
+    JOIN <second_table_name>
+    ON <condition>;
+```
+- 同じテーブルをJOINすることもできる．
+- デフォルトでは結合条件を満たさないrowは返さない(inner join)．
+  - JOINコマンドを変更することで，挙動を変えることができる．
+    - `INNER JOIN`: 結合条件を満たすrowのみ返す
+    - `LEFT OUTER JOIN`: 左側のtableのすべてのrowと，右側のtableの条件を満たすrowを返す
+    - `RIGHT OUTER JOIN`: 右側のtableのすべてのrowと，左側のtableの条件を満たすrowを返す
+    - `FULL OUTER JOIN`: 両方のtableに存在するすべてのrowを返す
+- カラム名を指定する際に，明示的に属するテーブルを指定できる(`<table_name>.<column_name>`)
+  - FROM句やJOIN句でエイリアスを宣言できる（`SELECT t1.column1, t2.column2 FROM table1 t1 JOIN table2 t2`）
+
+##### Aggregate functions
+
+
+#### flat-textファイルからの読み込み
+```bash
+COPY <table_name> FROM <file_path>;
+```
 
 ## Glossary
 - RDBMS(ORDBMS): (object-)relational database management system
