@@ -10,6 +10,8 @@
       - [DBの作成](#dbの作成)
     - [SQLの基礎](#sqlの基礎)
       - [Tableの作成](#tableの作成)
+      - [Tableの削除](#tableの削除)
+      - [Rowの追加](#rowの追加)
   - [Glossary](#glossary)
 
 
@@ -39,8 +41,11 @@ Windowsインストーラでインストールした場合，superuserのユー�
 
 - よく使うコマンド
     - `\l`: データベースのリスト表示
-        - `\l+`: 詳細表示
+      - `\l+`: 詳細表示
     - `\c <db_name>`: データベースアクセス
+    - `\dt`: テーブルのリスト表示
+      - `\dt+`: 詳細表示
+    - `\d <table_name>`: カラムの表示
     - `\h <command>`: コマンドヘルプ
     - `\q`: 終了
 
@@ -53,23 +58,43 @@ db_nameのデフォルト値は`default`．
 ### SQLの基礎
 #### Tableの作成
 ```bash
-CREATE TABLE <table_name> (
-    <column_name> <type>,
-);
+CREATE TABLE <schema_name>.<table_name> (
+    <column_name> <type> <constraint>,
+    ...
+    <constraint>
+)
 ```
 - typeの例
-    - `int`: 32-bit integer
-    - `smallint`: 16-bit integer
-    - `real`: 32-bit floating point number
-    - `double` precision: 64-bit floating point number
-    - `char(N)`: Fixed-length string (space padding)
-    - `varchar(N)`: Variable-length string
-    - `date`: Date
-    - `time`: Time
-    - `timestamp`: Date and time
-    - `interval`: Time interval
-    - PostgreSQL-specific data type
-      - `point`: 2D geometric point represented by x and y coordinates
+  - `int`: 32-bit integer
+  - `smallint`: 16-bit integer
+  - `real`: 32-bit floating point number
+  - `double` : 64-bit floating point number
+  - `char(N)`: Fixed-length string (space padding)
+  - `varchar(N)`: Variable-length string
+  - `date`: Date
+  - `time`: Time
+  - `timestamp`: Date and time
+  - `interval`: Time interval
+  - PostgreSQL-specific data type
+    - `serial`: 整数値，自動で増分されるシーケンス
+    - `point`: 2D geometric point represented by x and y coordinates
+- constraintの例
+  - `PRIMARY KEY`: 主キー
+  - `NOT NULL`: 非NULL
+  - `UNIQUE`: 一意
+  - `CONTRAINT <constraint_name> CHECK (<condition>)`: カスタムconstraint
+    - サンプル: `CONSTRAINT age_check CHECK (age >= 0)`
+- schemaを指定しない場合，`public` schemaに作成される
+
+#### Tableの削除
+```bash
+DROP TABLE <table_name>
+```
+
+#### Rowの追加
+```bash
+INSERT INTO <table_name> VALUES (<value>, ...)
+```
 
 
 ## Glossary
