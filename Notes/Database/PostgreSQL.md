@@ -22,6 +22,7 @@
       - [Foreign Key](#foreign-key)
       - [Transaction](#transaction)
         - [Savepoint](#savepoint)
+      - [Window function](#window-function)
       - [flat-textファイルからの読み込み](#flat-textファイルからの読み込み)
   - [Glossary](#glossary)
 
@@ -129,6 +130,7 @@ SELECT <column_expresiion>, ...
   - ワイルドカード
     - `%`: 0文字以上の任意の文字列
     - `_`: 任意の1文字
+- 降順で並べたい場合は`ORDER BY <column_expression> DESC`を使う．
 
 ##### Table間の結合
 ```bash
@@ -246,8 +248,37 @@ COMMIT;
 - 不要なSavepointは`RELEASE SAVEPOINT <savepoint_name>`で解放するとリソースを回収できる．
   - 解放するSavepointよりも後に定義されたSavepointも解放される．
 
-
-
+#### Window function
+現在のrowに関連するrowのセット(window frame)に対して計算を実行したい場合に用いる．
+```bash
+SELECT <window_expression> OVER (
+            PARTITION BY <partition_column_name>
+            ORDER BY <column_name>
+        ) AS <window_column_name>
+    FROM <table_name>;
+```
+- `PARTITION BY`を指定しない場合，すべての行を含む単一のpartitionの上で計算が行われる．
+- `ORDER BY`句が指定されている場合，window frameにはpartition内の最初の行から現在の行までのすべての行が含まれる．
+  - `ORDER BY`句が指定されていない場合は，partition内のすべての行が含まれる．
+  - `ORDER BY`句に複数のカラムを指定すると，最初のカラムが同じ値の場合に次のカラムの値で順序が決まる．
+- window functionは，`SELECT`リストと`ORDER BY`句の中でのみ使うことができる．
+  - `WHERE`などでwindow functionの結果を使用したい場合は，サブクエリを使う
+    - サンプル:
+        ```bash
+        SELECT name
+            FROM 
+                (SELECT rank OVER (PARTITION BY class, ORDER BY score)　AS score_rank
+                    FROM score_table
+                ) AS ss
+        WHERE score_rank < 3;
+        ```
+- 同一クエリ内で複数のwindow functionに同一の入力を行いたい場合，`WINDOW`句で定義することができる．
+    ```bash
+    SELECT <window_expression> OVER <window_name>, ...
+        FROM <table_name>
+        WINDOW <window_name> AS (...);
+    ```
+  
 #### flat-textファイルからの読み込み
 ```bash
 COPY <table_name> FROM <file_path>;
