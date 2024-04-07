@@ -20,6 +20,8 @@
       - [DELETE文](#delete文)
       - [VIEW](#view)
       - [Foreign Key](#foreign-key)
+      - [Transaction](#transaction)
+        - [Savepoint](#savepoint)
       - [flat-textファイルからの読み込み](#flat-textファイルからの読み込み)
   - [Glossary](#glossary)
 
@@ -214,6 +216,38 @@ CREATE TABLE <child_table_name> (
 ```
 - 外部キーが参照する列は`unique`か`primary key` constraintをもつ必要がある．
 
+#### Transaction
+一連の動作を不可分として扱い一部のみが実行されないことを保証したい際に使われる．
+これに加え，transactional databaseでは以下が保証される．
+- 処理が成功したときに永続ストレージに保存される．
+- transactionの処理中に同時に実行中の他のtransactionの影響を受けない．
+
+```bash
+BEGIN;
+
+# UPDATE ...
+
+COMMIT;
+```
+- 変更を保存せず元の状態に戻したい場合は`ROLLBACK`を使う．
+- PostgreSQLでは，transaction blockに囲まれていないすべてのSQL文が，暗黙的に`BEGIN`と`COMMIT`で囲まれているものとして扱う．
+
+##### Savepoint
+ロールバックする内容を細かく制御したい場合は`SAVEPOINT`を使用する．
+```bash
+BEGIN;
+# UPDATE ...
+SAVEPOINT <savepoint_name>;
+# UPDATE ...
+ROLLBACK TO <savepoint_name>;
+# UPDATE ...
+COMMIT;
+```
+- 不要なSavepointは`RELEASE SAVEPOINT <savepoint_name>`で解放するとリソースを回収できる．
+  - 解放するSavepointよりも後に定義されたSavepointも解放される．
+
+
+
 #### flat-textファイルからの読み込み
 ```bash
 COPY <table_name> FROM <file_path>;
@@ -221,3 +255,4 @@ COPY <table_name> FROM <file_path>;
 
 ## Glossary
 - RDBMS(ORDBMS): (object-)relational database management system
+- atomic: Transactionが一連の操作を不可分の単位として扱う性質のこと．途中の何処かでエラーが発生した場合すべての変更がロールバックする．
