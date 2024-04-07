@@ -17,6 +17,8 @@
         - [Table間の結合](#table間の結合)
         - [Aggregate functions](#aggregate-functions)
       - [UPDATE文](#update文)
+      - [DELETE文](#delete文)
+      - [VIEW](#view)
       - [flat-textファイルからの読み込み](#flat-textファイルからの読み込み)
   - [Glossary](#glossary)
 
@@ -183,7 +185,24 @@ UPDATE <table_name>
     SET <column_name> = <column_expression>, ...
     WHERE <condition>;
 ```
-    
+
+#### DELETE文
+```bash
+DELETE FROM <table_name>
+    WHERE <condition>
+```
+
+#### VIEW
+複数のTableからデータを取得して仮想的なTableとして扱うことができる．
+```bash
+CREATE VIEW <view_name> AS
+    SELECT <column_expression>, ...
+    FROM <table_name>, ...
+    WHERE <condition>;
+```
+- 普通のtableと同様にFROM句で名前を指定してアクセスできる
+  - `SELECT <column_expression> FROM <view_name>;`
+
 #### flat-textファイルからの読み込み
 ```bash
 COPY <table_name> FROM <file_path>;
