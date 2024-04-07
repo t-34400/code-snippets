@@ -19,6 +19,7 @@
       - [UPDATE文](#update文)
       - [DELETE文](#delete文)
       - [VIEW](#view)
+      - [Foreign Key](#foreign-key)
       - [flat-textファイルからの読み込み](#flat-textファイルからの読み込み)
   - [Glossary](#glossary)
 
@@ -94,9 +95,9 @@ CREATE TABLE <schema_name>.<table_name> (
     - `serial`: 整数値，自動で増分されるシーケンス
     - `point`: 2D geometric point represented by x and y coordinates
 - constraintの例
-  - `PRIMARY KEY`: 主キー
-  - `NOT NULL`: 非NULL
-  - `UNIQUE`: 一意
+  - `primary key`: 主キー
+  - `not null`: 非NULL
+  - `unique`: 一意
   - `CONTRAINT <constraint_name> CHECK (<condition>)`: カスタムconstraint
     - サンプル: `CONSTRAINT age_check CHECK (age >= 0)`
 - schemaを指定しない場合，`public` schemaに作成される
@@ -202,6 +203,16 @@ CREATE VIEW <view_name> AS
 ```
 - 普通のtableと同様にFROM句で名前を指定してアクセスできる
   - `SELECT <column_expression> FROM <view_name>;`
+
+#### Foreign Key
+１つのtable(child-table)の列の値が，他のtable(parent-table)の列の値と一致する必要がある場合に使う．
+```bash
+CREATE TABLE <child_table_name> (
+    <column_name> <type> references <parent_table_name>(<parent_column_name>),
+    ...
+);
+```
+- 外部キーが参照する列は`unique`か`primary key` constraintをもつ必要がある．
 
 #### flat-textファイルからの読み込み
 ```bash
