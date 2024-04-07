@@ -119,6 +119,10 @@ SELECT <column_expresiion>, ...
 - カラムの部分はexpressionを使うことができる
   - サンプル: `SELECT (column_1 + column_2)/2 AS avg FROM my_table`
 - 一意のデータを取得するときには，`SELECT DISTINCT`を使う．
+- 文字列でフィルタリングする場合`WHERE <string_column_name> LIKE <pattern>`を使う．
+  - ワイルドカード
+    - `%`: 0文字以上の任意の文字列
+    - `_`: 任意の1文字
 
 ##### Table間の結合
 ```bash
@@ -127,9 +131,9 @@ SELECT <column_expression>
     JOIN <second_table_name>
     ON <condition>;
 ```
-- 同じテーブルをJOINすることもできる．
+- 同じテーブルを`JOIN`することもできる．
 - デフォルトでは結合条件を満たさないrowは返さない(inner join)．
-  - JOINコマンドを変更することで，挙動を変えることができる．
+  - `JOIN`コマンドを変更することで，挙動を変えることができる．
     - `INNER JOIN`: 結合条件を満たすrowのみ返す
     - `LEFT OUTER JOIN`: 左側のtableのすべてのrowと，右側のtableの条件を満たすrowを返す
     - `RIGHT OUTER JOIN`: 右側のtableのすべてのrowと，左側のtableの条件を満たすrowを返す
@@ -138,8 +142,42 @@ SELECT <column_expression>
   - FROM句やJOIN句でエイリアスを宣言できる（`SELECT t1.column1, t2.column2 FROM table1 t1 JOIN table2 t2`）
 
 ##### Aggregate functions
+`SELECT`句内で複数の列から1つの値を得るために使う．
+```bash
+SELECT <aggregate_expression> 
+    FROM <table_name>;
+```
+
+- 例:
+  - `max()`
+  - `min()`
+  - `avg()`
+  - `sum()`
+  - `count()`
+- `GROUP BY <column_name>`であるカラムごとにグループ化して返すことができる．
+  - `HAVING <aggregate_condition>`で返すグループをフィルタリングできる．
+    - サンプル:
+      ```bash
+      SELECT column1, count(*), max(column2)
+        FROM table1
+        GROUP BY column1
+        HAVING max(column2) < 100;
+      ```
+  - `WHERE`句はaggregateが計算される前に実行されるのに対し，`HAVING`はaggregateが計算されたあとに実行される．
+    - そのため，`WHERE`句内ではaggregate functionを使用できない．
+      - 同様のことを`WHERE`句で行いたい場合は，`WHERE`句内でqueryの結果を利用する．
+          ```bash
+          SELECT * FROM table1
+              WHERE column1 = (SELECT max(column1) FROM table1);
+          ``` 
+    - aggregate functionを含まない`HAVING`句は`WHERE`句で同等の操作を行うよりも効率が落ちるため，一般的に`HAVING`句はaggregate functionを常に含む．
+  - `FILTER`句で，一部のaggregate計算への入力のフィルタリングを行うことができる．
+    - サンプル: `SELECT count(*) FILTER (WHERE column1 >= 0), max(column1);`
+      - この場合，column1が0よりも小さいrowはcountには入力されないが，maxには入力される．
+    - aggregateが計算される前に実行されるため，aggregate functionは使用できない．
 
 
+    
 #### flat-textファイルからの読み込み
 ```bash
 COPY <table_name> FROM <file_path>;
