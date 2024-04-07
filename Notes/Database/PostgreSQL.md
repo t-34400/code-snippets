@@ -13,9 +13,10 @@
       - [Tableの作成](#tableの作成)
       - [Tableの削除](#tableの削除)
       - [Rowの追加](#rowの追加)
-      - [Query](#query)
+      - [SELECT文](#select文)
         - [Table間の結合](#table間の結合)
         - [Aggregate functions](#aggregate-functions)
+      - [UPDATE文](#update文)
       - [flat-textファイルからの読み込み](#flat-textファイルからの読み込み)
   - [Glossary](#glossary)
 
@@ -109,7 +110,7 @@ INSERT INTO <table_name> (<column_name>, ...) VALUES (<value>, ...), ...;
 ```
 - 成功した場合，`INSERT <AFFECTED_ROWS_COUNT> <INSERTED_ROW_COUNT>`と出力される．
 
-#### Query
+#### SELECT文
 ```bash
 SELECT <column_expresiion>, ... 
     FROM <table_name> 
@@ -176,7 +177,12 @@ SELECT <aggregate_expression>
       - この場合，column1が0よりも小さいrowはcountには入力されないが，maxには入力される．
     - aggregateが計算される前に実行されるため，aggregate functionは使用できない．
 
-
+#### UPDATE文
+```bash
+UPDATE <table_name>
+    SET <column_name> = <column_expression>, ...
+    WHERE <condition>;
+```
     
 #### flat-textファイルからの読み込み
 ```bash
