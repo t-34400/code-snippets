@@ -23,6 +23,7 @@
       - [Transaction](#transaction)
         - [Savepoint](#savepoint)
       - [Window function](#window-function)
+      - [Inheritance](#inheritance)
       - [flat-textファイルからの読み込み](#flat-textファイルからの読み込み)
   - [Glossary](#glossary)
 
@@ -90,6 +91,7 @@ CREATE TABLE <schema_name>.<table_name> (
   - `double` : 64-bit floating point number
   - `char(N)`: Fixed-length string (space padding)
   - `varchar(N)`: Variable-length string
+  - `text`: Very long variable-length strings
   - `date`: Date
   - `time`: Time
   - `timestamp`: Date and time
@@ -278,6 +280,15 @@ SELECT <window_expression> OVER (
         FROM <table_name>
         WINDOW <window_name> AS (...);
     ```
+
+#### Inheritance
+```bash
+CREATE TABLE <table_name> (
+    <column_name> <type>, ...        
+) INHERITS (<super_table_name>);
+```
+
+
   
 #### flat-textファイルからの読み込み
 ```bash
